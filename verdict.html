@@ -1,0 +1,1078 @@
+<title>The Hawaii House Question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:  #ECEEE9;
+    --surface: #F9FAF7;
+    --sunk:    #E2E5DE;
+    --ink:     #14201D;
+    --ink-2:   #3D4A45;
+    --muted:   #6B766F;
+    --rule:    #D2D8CF;
+    --rule-2:  #BFC7BC;
+    --accent:  #14615A;
+    --accent-w:#DCEBE7;
+    --warn:    #94441F;
+    --warn-w:  #F2E2D7;
+    --good:    #48702F;
+    --good-w:  #E2ECD8;
+    --shadow:  0 1px 2px rgba(20,32,29,.06), 0 8px 24px -16px rgba(20,32,29,.28);
+
+    --f-display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --f-body: "Source Serif 4", Georgia, "Times New Roman", serif;
+    --f-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --measure: 34rem;
+    --wide: 60rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:  #0E1513;
+      --surface: #161F1D;
+      --sunk:    #101817;
+      --ink:     #E3E8E1;
+      --ink-2:   #B3BDB6;
+      --muted:   #8A968E;
+      --rule:    #283532;
+      --rule-2:  #37453F;
+      --accent:  #58B8AB;
+      --accent-w:#12312E;
+      --warn:    #DE9264;
+      --warn-w:  #37231A;
+      --good:    #97C46F;
+      --good-w:  #1F2E19;
+      --shadow:  0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:  #0E1513;
+    --surface: #161F1D;
+    --sunk:    #101817;
+    --ink:     #E3E8E1;
+    --ink-2:   #B3BDB6;
+    --muted:   #8A968E;
+    --rule:    #283532;
+    --rule-2:  #37453F;
+    --accent:  #58B8AB;
+    --accent-w:#12312E;
+    --warn:    #DE9264;
+    --warn-w:  #37231A;
+    --good:    #97C46F;
+    --good-w:  #1F2E19;
+    --shadow:  0 1px 2px rgba(0,0,0,.4), 0 8px 24px -16px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+  .page { max-width: var(--wide); margin: 0 auto; padding: 0 1.5rem 6rem; }
+
+  /* ---------- masthead ---------- */
+  .mast { padding: 4.5rem 0 2.25rem; border-bottom: 2px solid var(--ink); }
+  .kicker {
+    font-family: var(--f-mono); font-size: .688rem; font-weight: 500;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--accent);
+    display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; margin-bottom: 1.5rem;
+  }
+  .kicker span { color: var(--muted); }
+  h1 {
+    font-family: var(--f-display); font-weight: 800;
+    font-size: clamp(2.5rem, 7vw, 4.5rem); line-height: .96;
+    letter-spacing: -.03em; margin: 0 0 1.25rem; text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.25rem; line-height: 1.5; color: var(--ink-2);
+    max-width: 42rem; margin: 0;
+  }
+  .standfirst b { color: var(--ink); font-weight: 600; }
+
+  /* ---------- verdict ---------- */
+  .verdict {
+    margin: 2.25rem 0 0; background: var(--surface);
+    border: 1px solid var(--rule); border-left: 4px solid var(--warn);
+    padding: 1.75rem 1.75rem 1.5rem; box-shadow: var(--shadow);
+  }
+  .verdict h2 {
+    font-family: var(--f-mono); font-size: .688rem; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--warn);
+    margin: 0 0 .875rem;
+  }
+  .verdict p { margin: 0 0 .875rem; font-size: 1.0625rem; }
+  .verdict p:last-child { margin-bottom: 0; }
+  .verdict strong { font-weight: 600; }
+
+  /* ---------- sections ---------- */
+  section { padding-top: 4rem; }
+  .eyebrow {
+    font-family: var(--f-mono); font-size: .688rem; font-weight: 600;
+    letter-spacing: .16em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 .625rem; display: flex; align-items: baseline; gap: .75rem;
+  }
+  .eyebrow::after {
+    content: ""; flex: 1; height: 1px; background: var(--rule-2);
+    transform: translateY(-.2em);
+  }
+  h2.head {
+    font-family: var(--f-display); font-weight: 700;
+    font-size: clamp(1.75rem, 3.6vw, 2.5rem); line-height: 1.08;
+    letter-spacing: -.022em; margin: 0 0 1.25rem; text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--f-display); font-weight: 700; font-size: 1.125rem;
+    letter-spacing: -.01em; margin: 2.25rem 0 .625rem;
+  }
+  p { max-width: var(--measure); margin: 0 0 1.1rem; }
+  .wide p { max-width: none; }
+  ul { max-width: var(--measure); padding-left: 1.1rem; margin: 0 0 1.1rem; }
+  li { margin-bottom: .5rem; }
+  a { color: var(--accent); text-underline-offset: 2px; }
+
+  code, .m { font-family: var(--f-mono); font-size: .875em; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* ---------- pull ---------- */
+  .pull {
+    max-width: var(--measure); margin: 1.75rem 0; padding: 0 0 0 1.25rem;
+    border-left: 3px solid var(--accent);
+    font-family: var(--f-display); font-weight: 500; font-size: 1.3125rem;
+    line-height: 1.32; letter-spacing: -.015em; color: var(--ink);
+  }
+
+  /* ---------- statute box ---------- */
+  .statute {
+    background: var(--sunk); border: 1px solid var(--rule);
+    padding: 1.375rem 1.5rem; margin: 1.5rem 0; max-width: 44rem;
+  }
+  .statute .cite {
+    font-family: var(--f-mono); font-size: .688rem; letter-spacing: .1em;
+    text-transform: uppercase; color: var(--muted); margin: 0 0 .625rem;
+  }
+  .statute blockquote {
+    margin: 0; font-size: 1.0625rem; line-height: 1.5;
+  }
+  .statute blockquote em { color: var(--warn); font-style: normal; font-weight: 600; }
+
+  /* ---------- tables ---------- */
+  .scroll { overflow-x: auto; margin: 1.5rem 0; }
+  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: .9375rem; }
+  caption {
+    text-align: left; font-family: var(--f-mono); font-size: .688rem;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+    padding-bottom: .625rem;
+  }
+  th, td { padding: .5rem .75rem; text-align: right; border-bottom: 1px solid var(--rule); }
+  th:first-child, td:first-child { text-align: left; padding-left: 0; }
+  th {
+    font-family: var(--f-mono); font-size: .688rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--muted);
+    border-bottom: 1px solid var(--rule-2); white-space: nowrap;
+  }
+  td { font-variant-numeric: tabular-nums; }
+  td.lab { font-family: var(--f-body); }
+  tbody tr:hover { background: var(--surface); }
+  tr.total td { border-top: 1px solid var(--rule-2); border-bottom: none; font-weight: 600; }
+  .bad  { color: var(--warn); }
+  .ok   { color: var(--good); }
+  .flag {
+    font-family: var(--f-mono); font-size: .625rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase;
+    padding: .1rem .4rem; border-radius: 2px; white-space: nowrap;
+  }
+  .flag.no  { background: var(--warn-w); color: var(--warn); }
+  .flag.yes { background: var(--good-w); color: var(--good); }
+
+  /* ---------- bar charts ---------- */
+  figure { margin: 1.75rem 0; }
+  figcaption {
+    font-family: var(--f-mono); font-size: .688rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--muted); margin-bottom: .875rem;
+  }
+  .chart { display: grid; gap: .5rem; max-width: 44rem; }
+  .row { display: grid; grid-template-columns: 11rem 1fr 5rem; align-items: center; gap: .75rem; }
+  .row .name { font-size: .875rem; line-height: 1.25; }
+  .row .val {
+    font-family: var(--f-mono); font-size: .8125rem; font-weight: 500;
+    text-align: right; font-variant-numeric: tabular-nums;
+  }
+  .track { position: relative; height: 22px; background: var(--sunk); }
+  .fill {
+    position: absolute; top: 0; height: 22px;
+    background: var(--accent); border-radius: 0 3px 3px 0;
+  }
+  .fill.neg { background: var(--warn); border-radius: 3px 0 0 3px; }
+  .fill.pos { background: var(--good); }
+  .zero {
+    position: absolute; top: -3px; bottom: -3px; width: 1px;
+    background: var(--rule-2);
+  }
+  .hurdle {
+    position: absolute; top: -3px; bottom: -3px; width: 0;
+    border-left: 1px dashed var(--ink-2);
+  }
+  .axis {
+    display: grid; grid-template-columns: 11rem 1fr 5rem; gap: .75rem;
+    font-family: var(--f-mono); font-size: .625rem; letter-spacing: .06em;
+    color: var(--muted); text-transform: uppercase; margin-top: .375rem;
+  }
+  .axis .note { position: relative; height: 1.1em; }
+  .axis .note span { position: absolute; transform: translateX(-50%); white-space: nowrap; }
+
+  /* ---------- ladder ---------- */
+  .ladder { counter-reset: rung; display: grid; gap: 0; margin: 1.75rem 0; max-width: 46rem; }
+  .rung {
+    display: grid; grid-template-columns: 2.25rem 1fr auto; gap: 1rem;
+    padding: .875rem 0; border-bottom: 1px solid var(--rule); align-items: baseline;
+  }
+  .rung .n {
+    font-family: var(--f-mono); font-size: .75rem; font-weight: 600;
+    color: var(--muted); padding-top: .15rem;
+  }
+  .rung .what { font-size: .9375rem; line-height: 1.4; }
+  .rung .what em { font-style: normal; color: var(--muted); display: block; font-size: .8125rem; }
+  .rung .irr {
+    font-family: var(--f-mono); font-size: 1rem; font-weight: 600;
+    font-variant-numeric: tabular-nums; white-space: nowrap;
+  }
+  .rung.win { background: var(--good-w); margin: 0 -.75rem; padding-left: .75rem; padding-right: .75rem; }
+
+  /* ---------- cards ---------- */
+  .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); margin: 1.5rem 0; }
+  .card { background: var(--surface); border: 1px solid var(--rule); padding: 1.125rem 1.25rem; }
+  .card h4 {
+    font-family: var(--f-mono); font-size: .688rem; font-weight: 600;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--accent);
+    margin: 0 0 .5rem;
+  }
+  .card p { font-size: .9375rem; margin: 0; max-width: none; }
+  .stat {
+    font-family: var(--f-display); font-weight: 700; font-size: 2rem;
+    letter-spacing: -.02em; line-height: 1; margin: 0 0 .375rem;
+    font-variant-numeric: tabular-nums;
+  }
+  .stat.bad { color: var(--warn); }
+  .stat.ok { color: var(--good); }
+
+  footer {
+    margin-top: 5rem; padding-top: 1.5rem; border-top: 2px solid var(--ink);
+    font-size: .875rem; color: var(--muted);
+  }
+  footer p { max-width: 46rem; }
+  footer a { color: var(--accent); }
+
+  @media (max-width: 34rem) {
+    .row, .axis { grid-template-columns: 7.5rem 1fr 4rem; }
+    .row .name { font-size: .8125rem; }
+  }
+
+  .bento {
+    display: flex; align-items: center; gap: .55rem;
+    margin: 1.5rem 0 0; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+    font-family: var(--f-mono); font-size: .75rem; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted); max-width: none;
+  }
+  .bento svg { color: var(--accent); flex: none; }
+  .bento b { color: var(--ink); font-weight: 600; letter-spacing: .1em; }
+</style>
+
+<div class="page">
+
+<header class="mast">
+  <div class="kicker">
+    Feasibility model <span>·</span> <span>29 August 2026</span> <span>·</span>
+    <span>all arithmetic exact via agent-calc</span>
+  </div>
+  <h1>The Hawaii House Question</h1>
+  <p class="standfirst">
+    Can a ten-bedroom creator house in Hawaii pay for itself? Modelled across two islands,
+    buy against lease, four revenue engines and every tax line the State actually charges.
+    <b>The short answer is that it can — but not as a house, and not on Oʻahu.</b>
+  </p>
+</header>
+
+<div class="verdict">
+  <h2>Verdict</h2>
+  <p>
+    <strong>Rent from influencers cannot carry this building in any configuration modelled.</strong>
+    At $6,500 per creator per month, the cheapest version of the deal needs
+    <span class="m num">104%</span> occupancy and the most expensive needs
+    <span class="m num">134%</span>. There is no price at which creators fill the gap:
+    covering costs on rent alone requires <span class="m num">$107,000–$136,000</span> per
+    creator per year.
+  </p>
+  <p>
+    <strong>One configuration clears a 12% hurdle.</strong> Hawaiʻi Island, purchased,
+    with 30-day service terms, location days priced against the film credit and ten brand
+    takeovers a year: <span class="m num ok">12.93%</span> ten-year IRR,
+    <span class="m num">2.78×</span> debt coverage. Oʻahu is negative in every variant.
+  </p>
+  <p>
+    <strong>It is not an influencer house.</strong> It is a branded-content production venue
+    that keeps a resident roster as inventory. Brand activations are 43% of revenue and
+    every dollar of return sits on them.
+  </p>
+  <p>
+    <strong>And that 12.93% is the 82nd percentile, not the expected case.</strong> Section 08
+    rebuilds the analysis the way an underwriter would — with a pre-opening period, a monthly
+    cash curve, correlated downside and 600 simulated paths. The median path loses money, the
+    real capital requirement is <span class="m num">$2,017,029</span> rather than $1,390,000,
+    and there is a <span class="m num">27%</span> chance of failing to cover debt service.
+    Read that section before this one persuades you of anything.
+  </p>
+</div>
+
+<p style="max-width:34rem;margin:1.25rem 0 0;font-size:.9375rem;color:var(--muted)">
+  Every assumption below is arguable, so
+  <a href="https://claude.ai/code/artifact/e29e380a-8a2c-410f-b7cc-43aa53702870">open the
+  live sandbox</a> and change them — capacity, P&amp;L, coverage, returns and funding need
+  recompute as you move the sliders.
+</p>
+
+<!-- ============================================ LAW -->
+<section>
+  <p class="eyebrow">01 — What the law actually permits</p>
+  <h2 class="head">Two statutes decide this before any spreadsheet does</h2>
+
+  <p>
+    Hawaii is the only state that taxes gross receipts on every rental, and one of the few
+    that has spent the last four years actively legislating against short stays. Before
+    modelling revenue, two legal facts fix the shape of the business.
+  </p>
+
+  <h3>The short-stay market is closed</h3>
+  <p>
+    Honolulu's Ordinance 22-7 set a 90-day minimum in residential districts. A federal court
+    permanently enjoined the 90-day rule in December 2023, so enforcement runs on the older
+    30-day standard, and a second attempt in 2025 faces the same challenge. Either way,
+    <strong>nothing under 30 days is available on Oʻahu outside resort zoning.</strong> Maui
+    went further: Bill 9 became Ordinance 5909 in December 2025 and phases out roughly 6,200
+    apartment-district vacation rentals — West Maui by January 2029, South Maui by 2031.
+    Litigation is filed; no injunction has issued.
+  </p>
+  <p>
+    So the model never assumes a nightly-rate business. Minimum term is 30 days, and the
+    interesting question becomes where between 30 and 180 days you sit.
+  </p>
+
+  <h3>The film credit is real, generous — and excludes exactly what you were going to make</h3>
+  <p>
+    HRS §235-17 pays a <strong>refundable</strong> credit of 22% on Oʻahu and 27% on the
+    neighbor islands. Act 185 (2026) adds five points for productions with at least 80% local
+    hires, taking it to 27% and 32%. Qualified costs explicitly include
+    <em>"rentals and fees for use of local facilities and locations,"</em>
+    <em>"rentals of vehicles and lodging for cast and crew,"</em> and
+    <em>"airfare for flights to or from Hawaii."</em> A house full of visiting creators is,
+    line for line, a qualified expense.
+  </p>
+
+  <div class="statute">
+    <p class="cite">HRS §235-17(o) — definitions</p>
+    <blockquote>
+      "Commercial" … <em>does not include an advertising message with Internet-only
+      distribution.</em><br><br>
+      "Qualified production" … does not include … <em>productions produced primarily for
+      industrial, corporate, institutional, or other private purposes.</em>
+    </blockquote>
+  </div>
+
+  <p>
+    That is the sentence that kills the obvious plan. A TikTok or Instagram brand campaign
+    shot at the house is statutorily excluded — internet-only distribution, produced for a
+    private commercial purpose. You cannot build the business on claiming this credit.
+  </p>
+
+  <p class="pull">
+    Don't try to be the taxpayer. Be the qualified expense.
+  </p>
+
+  <p>
+    What survives is better anyway. Music videos, short films, streaming series, pilots,
+    specials and TV-distributed commercials <em>are</em> qualified productions. When one of
+    those rents the house, <strong>the production claims the credit on your invoice.</strong>
+    You carry no compliance burden, file nothing, and your price becomes 22–32% cheaper to
+    the customer without costing you a cent. It is a demand subsidy, and it prices as one.
+  </p>
+
+  <figure>
+    <figcaption>What you can invoice while the production's out-of-pocket cost stays $4,500/day</figcaption>
+    <div class="chart">
+      <div class="row"><div class="name">Oʻahu, base 22%</div>
+        <div class="track"><div class="fill" style="left:0;width:78.4%"></div></div>
+        <div class="val">$5,769</div></div>
+      <div class="row"><div class="name">Oʻahu + local-hire uplift 27%</div>
+        <div class="track"><div class="fill" style="left:0;width:83.8%"></div></div>
+        <div class="val">$6,164</div></div>
+      <div class="row"><div class="name">Neighbor island, base 27%</div>
+        <div class="track"><div class="fill" style="left:0;width:83.8%"></div></div>
+        <div class="val">$6,164</div></div>
+      <div class="row"><div class="name">Neighbor island + uplift 32%</div>
+        <div class="track"><div class="fill pos" style="left:0;width:90%"></div></div>
+        <div class="val">$6,618</div></div>
+    </div>
+  </figure>
+
+  <p>
+    Moving from Oʻahu to Hawaiʻi Island and hiring locally is worth
+    <strong class="m num">14.71%</strong> more gross revenue for an identical customer cost.
+    The State pays the difference. One caveat sets the customer list: the production must
+    spend <span class="m num">$100,000</span> in Hawaii to claim anything, so single-day
+    creator shoots never qualify. Multi-week series and music-video blocks do.
+  </p>
+</section>
+
+<!-- ============================================ CAPACITY -->
+<section>
+  <p class="eyebrow">02 — The capacity ledger</p>
+  <h2 class="head">A house is a fixed pool of bed-nights, and rent is the worst thing to sell</h2>
+
+  <p>
+    Ten beds is 3,650 bed-nights a year. Every revenue engine consumes them and nothing can
+    be sold twice — which is the discipline most creator-house plans skip. Once you price
+    each engine per bed-night consumed, the hierarchy is unambiguous.
+  </p>
+
+  <figure>
+    <figcaption>Net contribution per bed-night, after direct costs</figcaption>
+    <div class="chart">
+      <div class="row"><div class="name">Brand activations</div>
+        <div class="track"><div class="fill" style="left:0;width:93.6%"></div></div>
+        <div class="val">$936</div></div>
+      <div class="row"><div class="name">Cohort retreats</div>
+        <div class="track"><div class="fill" style="left:0;width:56.3%"></div></div>
+        <div class="val">$563</div></div>
+      <div class="row"><div class="name">Production location days</div>
+        <div class="track"><div class="fill" style="left:0;width:56.3%"></div></div>
+        <div class="val">$563</div></div>
+      <div class="row"><div class="name">Creator residencies</div>
+        <div class="track"><div class="fill neg" style="left:0;width:21.4%;border-radius:0 3px 3px 0"></div></div>
+        <div class="val">$214</div></div>
+    </div>
+  </figure>
+
+  <p>
+    Housing influencers is the <em>least</em> productive use of the asset — roughly a quarter
+    of what a brand takeover yields on the same bed. And yet the sensitivity analysis says
+    returns move more on the residency rate than on anything else, because residency occupies
+    most of the calendar. The business is most exposed to its weakest engine.
+  </p>
+
+  <h3>Can rent alone carry it?</h3>
+  <p>
+    Charging $6,500 per creator per month on 180-day terms, each seat contributes $5,678 after
+    GET and payment fees. Against fixed costs, here is what the house would need:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <caption>Residency as the only engine — seat-months required against 120 available</caption>
+      <thead>
+        <tr><th>Configuration</th><th>Fixed cost</th><th>Seat-months needed</th><th>Occupancy</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="lab">Oʻahu — buy</td><td>$911,911</td><td>160.6</td><td class="bad">133.8%</td><td><span class="flag no">impossible</span></td></tr>
+        <tr><td class="lab">Oʻahu — lease</td><td>$801,000</td><td>141.1</td><td class="bad">117.6%</td><td><span class="flag no">impossible</span></td></tr>
+        <tr><td class="lab">Hawaiʻi Island — buy</td><td>$784,847</td><td>138.2</td><td class="bad">115.2%</td><td><span class="flag no">impossible</span></td></tr>
+        <tr><td class="lab">Hawaiʻi Island — lease</td><td>$710,000</td><td>125.0</td><td class="bad">104.2%</td><td><span class="flag no">impossible</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Every configuration needs more than a full house. Inverting the question — what rent
+    <em>would</em> work at a realistic 75% occupancy — gives
+    <span class="m num">$8,890</span> to <span class="m num">$11,316</span> per seat-month,
+    or <span class="m num">$107,000–$136,000</span> per creator per year. Creators who can
+    pay that do not need a shared house.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>The null hypothesis</h4>
+      <p class="stat bad">0.19×</p>
+      <p>Debt coverage if you skip the business entirely and rent the Oʻahu house long-term at
+      $18,000/month. No Hawaii asset at these prices cash-flows as a plain rental — the
+      operating business is the only thing that can carry it.</p>
+    </div>
+    <div class="card">
+      <h4>Which means</h4>
+      <p class="stat">$264,484</p>
+      <p>Net cash flow in the best configuration, against −$186,361 as a passive landlord on
+      the same island. The venture adds real value over doing nothing. The question is
+      whether it adds enough.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================ RETURNS -->
+<section>
+  <p class="eyebrow">03 — Four configurations, ten years</p>
+  <h2 class="head">Buy or lease, Oʻahu or Hawaiʻi Island</h2>
+
+  <p>
+    A $4.0M North Shore property against a $2.6M Kona equivalent, each at 70% LTV and 7.25%
+    over thirty years, with $610,000 of studio build-out. Ten-year hold, 3% appreciation,
+    3% cost inflation, blended 40% ordinary tax, exit at 6% selling cost with full
+    depreciation recapture.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <caption>Base plan — 78% utilization, four engines running</caption>
+      <thead>
+        <tr><th>Configuration</th><th>NOI</th><th>DSCR</th><th>Equity</th><th>Cash-on-cash</th><th>10-yr IRR</th><th>NPV @ 12%</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="lab">Oʻahu — buy</td><td>$164,667</td><td class="bad">0.72</td><td>$1,810,000</td><td class="bad">−3.57%</td><td class="bad">−0.02%</td><td class="bad">−$1,213,854</td></tr>
+        <tr><td class="lab">Oʻahu — lease</td><td>$46,367</td><td>—</td><td>$610,000</td><td>7.60%</td><td class="bad">−11.66%</td><td class="bad">−$516,551</td></tr>
+        <tr><td class="lab">Hawaiʻi Island — buy</td><td>$211,507</td><td>1.42</td><td>$1,390,000</td><td>4.50%</td><td>3.54%</td><td class="bad">−$623,370</td></tr>
+        <tr><td class="lab">Hawaiʻi Island — lease</td><td>$137,367</td><td>—</td><td>$610,000</td><td>22.52%</td><td>5.68%</td><td class="bad">−$172,392</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    Every one of them is NPV-negative at a 12% hurdle, and this is already a confident plan.
+    Oʻahu at 0.72× coverage cannot service its own debt. The lease cases flatter cash-on-cash
+    because the denominator is small, then lose on exit: $610,000 sunk into a building you
+    do not own, with nothing to sell.
+  </p>
+
+  <p>
+    So the base plan is not the answer. The useful question is what would have to change.
+  </p>
+</section>
+
+<!-- ============================================ LADDER -->
+<section>
+  <p class="eyebrow">04 — The ladder</p>
+  <h2 class="head">Six changes, applied one at a time</h2>
+
+  <p>
+    Each rung holds everything below it and adds one decision. This is a genuine sequence —
+    later rungs depend on earlier ones.
+  </p>
+
+  <div class="ladder">
+    <div class="rung">
+      <div class="n">00</div>
+      <div class="what">Base plan, Oʻahu, purchased
+        <em>losses passive, 180-day terms, $1.81M equity</em></div>
+      <div class="irr bad">−4.12%</div>
+    </div>
+    <div class="rung">
+      <div class="n">01</div>
+      <div class="what">Move to a neighbor island
+        <em>cheaper asset, lower property tax, 27% credit for customers</em></div>
+      <div class="irr">+1.07%</div>
+    </div>
+    <div class="rung">
+      <div class="n">02</div>
+      <div class="what">30-day terms with real services
+        <em>costs $55,049/yr in TAT, unlocks $973,500 of year-one depreciation</em></div>
+      <div class="irr">+0.79%</div>
+    </div>
+    <div class="rung">
+      <div class="n">03</div>
+      <div class="what">Price location days against the 32% credit
+        <em>$6,618/day instead of $4,500, 45 days sold</em></div>
+      <div class="irr">+6.10%</div>
+    </div>
+    <div class="rung win">
+      <div class="n">04</div>
+      <div class="what"><strong>Ten brand activations at $72,000</strong>
+        <em>DSCR 2.78 · NPV @ 12% turns positive at +$72,389</em></div>
+      <div class="irr ok">+12.93%</div>
+    </div>
+    <div class="rung">
+      <div class="n">05</div>
+      <div class="what">Opportunity-zone basis, cheap shell heavily improved
+        <em>saves $248,017 of exit tax but costs $580,000 more equity</em></div>
+      <div class="irr">+10.07%</div>
+    </div>
+  </div>
+
+  <p>
+    Rung 02 looks like a step backwards on IRR and is not — it trades $55,049 a year of
+    transient tax for $389,400 of year-one tax shield, worth $185,218 in NPV. The IRR falls
+    because the shield lands entirely in year one and IRR punishes early-weighted returns.
+    Judge that rung on NPV, not IRR.
+  </p>
+
+  <p>
+    Rung 05 is the instructive failure. The opportunity zone is real — Kailua-Kona has two
+    designated tracts — and the ten-year step-up eliminates $248,017 of recapture and capital
+    gains. But a Qualified Opportunity Fund must <em>substantially improve</em> the property,
+    doubling the building basis within 30 months. That forces $1.4M of build-out, and
+    <strong>capex is unlevered while purchase price is not.</strong> Shifting dollars from a
+    70%-financed price to a 100%-equity renovation destroys more leverage than the subsidy
+    returns. The OZ only works if the renovation itself is debt-financed.
+  </p>
+</section>
+
+<!-- ============================================ FRAGILITY -->
+<section>
+  <p class="eyebrow">05 — Where it breaks</p>
+  <h2 class="head">Everything rests on brand activations</h2>
+
+  <figure>
+    <figcaption>Ten-year IRR against brand takeovers sold per year — dashed line is the 12% hurdle</figcaption>
+    <div class="chart">
+      <div class="row"><div class="name">2 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill neg" style="left:22.75%;width:2.25%"></div></div>
+        <div class="val bad">−0.54%</div></div>
+      <div class="row"><div class="name">4 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill" style="left:25%;width:12.6%"></div></div>
+        <div class="val">3.03%</div></div>
+      <div class="row"><div class="name">6 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill" style="left:25%;width:26.9%"></div></div>
+        <div class="val">6.46%</div></div>
+      <div class="row"><div class="name">8 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill" style="left:25%;width:40.6%"></div></div>
+        <div class="val">9.75%</div></div>
+      <div class="row"><div class="name">10 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill pos" style="left:25%;width:53.9%"></div></div>
+        <div class="val ok">12.93%</div></div>
+      <div class="row"><div class="name">12 activations</div>
+        <div class="track"><div class="zero" style="left:25%"></div><div class="hurdle" style="left:75%"></div>
+          <div class="fill pos" style="left:25%;width:66.7%"></div></div>
+        <div class="val ok">16.00%</div></div>
+    </div>
+    <div class="axis">
+      <div></div>
+      <div class="note"><span style="left:25%">0%</span><span style="left:75%">12% hurdle</span></div>
+      <div></div>
+    </div>
+  </figure>
+
+  <p>
+    Eight sold takeovers a year holds a roughly 10% return. Five keeps the lights on. Below
+    four the venture is underwater no matter what else goes right — the island, the tax
+    structure and the film credit are all irrelevant if the brand pipeline does not exist.
+  </p>
+
+  <h3>Is $72,000 for a five-day takeover a real price?</h3>
+  <p>
+    Six resident creators producing three pieces each, at the low end of the published
+    mid-tier rate card ($5,000 per post), is 18 assets worth
+    <span class="m num">$90,000</span> bought à la carte — before the hero film, the stills,
+    and a location a brand cannot buy on Oʻahu. <strong>The price holds.</strong> The risk is
+    not what you charge. It is whether eight to ten brands a year will book Hawaii at all,
+    and no model can answer that. It is the first thing to test, before any property is
+    committed.
+  </p>
+
+  <h3>What moves the number</h3>
+  <div class="scroll">
+    <table>
+      <caption>Sensitivity — each driver moved ±25%, Hawaiʻi Island purchased</caption>
+      <thead><tr><th>Driver</th><th>−25%</th><th>+25%</th><th>Swing</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Residency rate per seat-month</td><td class="bad">−1.05%</td><td>7.89%</td><td>8.94 pp</td></tr>
+        <tr><td class="lab">Residency occupancy</td><td class="bad">−0.79%</td><td>7.65%</td><td>8.44 pp</td></tr>
+        <tr><td class="lab">Staff cost</td><td>6.99%</td><td>0.01%</td><td>6.97 pp</td></tr>
+        <tr><td class="lab">Brand activation fee</td><td>0.37%</td><td>6.59%</td><td>6.22 pp</td></tr>
+        <tr><td class="lab">Activations sold</td><td>1.09%</td><td>5.91%</td><td>4.82 pp</td></tr>
+        <tr><td class="lab">Retreat price</td><td>1.58%</td><td>5.45%</td><td>3.87 pp</td></tr>
+        <tr><td class="lab">Mortgage rate</td><td>4.95%</td><td>2.02%</td><td>2.93 pp</td></tr>
+        <tr><td class="lab">Production day rate</td><td>2.24%</td><td>4.81%</td><td>2.57 pp</td></tr>
+        <tr><td class="lab">Appreciation</td><td>2.45%</td><td>4.60%</td><td>2.15 pp</td></tr>
+        <tr><td class="lab">Build-out capex</td><td>4.56%</td><td>2.61%</td><td>1.95 pp</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    Staff cost ranking third is worth sitting with. Hawaii's Prepaid Health Care Act obliges
+    coverage for anyone working 20+ hours a week, and a $265,000 payroll swings returns nearly
+    as hard as the entire brand pipeline. Staff lean, contract the rest.
+  </p>
+</section>
+
+<!-- ============================================ STRUCTURE -->
+<section>
+  <p class="eyebrow">06 — Entity and tax structure</p>
+  <h2 class="head">Three decisions worth real money, and one genuine conflict</h2>
+
+  <h3>The 180-day line cuts both ways</h3>
+  <p>
+    This is the structural tension at the centre of the deal, and it is not obvious. Hawaii's
+    Transient Accommodations Tax — 11% state from January 2026 plus 3% county — applies to any
+    stay under 180 consecutive days. So 180-day leases save you 14 points on the lodging line.
+  </p>
+  <p>
+    But a 180-day lease is unambiguously a <em>rental activity</em> under Treasury Reg.
+    §1.469-1T(e)(3), which makes your losses passive and traps the year-one bonus depreciation
+    until you have passive income or you sell. Take 30-day terms and provide significant
+    personal services — production support, programming, housekeeping, meals — and the
+    §1.469-1T(e)(3)(ii)(B) exception applies: not a rental activity, material participation
+    makes it non-passive, and the depreciation offsets other income.
+  </p>
+
+  <div class="scroll">
+    <table>
+      <caption>Term length — the trade, in NPV @ 12%</caption>
+      <thead><tr><th>Configuration</th><th>180+ days, losses suspended</th><th>30 days + services, shield live</th><th>Winner by</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Hawaiʻi Island — buy</td><td>−$998,084</td><td>−$812,866</td><td class="ok">30-day, +$185,218</td></tr>
+        <tr><td class="lab">Oʻahu — buy</td><td>−$1,936,617</td><td>−$1,403,351</td><td class="ok">30-day, +$533,266</td></tr>
+        <tr><td class="lab">Hawaiʻi Island — lease</td><td>−$281,383</td><td>−$361,889</td><td class="ok">180-day, +$80,507</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    If you own the building, take the 30-day service structure — $55,049 a year of TAT buys
+    $389,400 of tax shield. If you lease it, there is no building to depreciate, the shield is
+    small, and you should take the 180-day terms and skip TAT entirely. The right answer
+    depends on whether you own, which is why this decision cannot be made before the tenure
+    decision.
+  </p>
+
+  <h3>PropCo / OpCo, and Hawaii's pyramiding trap</h3>
+  <p>
+    Split title from operations: a Hawaii LLC holds the property, a second LLC — S-corp
+    elected, to take reasonable salary and save self-employment tax on the rest — runs the
+    business, holds the GET licence, employs staff and signs creator agreements. Standard, and
+    it also lets you sell the asset and the business separately.
+  </p>
+  <p>
+    The trap is that Hawaii's GET has no general exemption for intercompany transactions.
+    PropCo charging OpCo rent pays 4.5% on that rent while OpCo pays 4.5% on its revenue —
+    you have taxed the same dollar twice for the privilege of good structure. The fix is
+    HRS §237-16.5, which lets a lessee that subleases deduct 87.5% of the rent it pays:
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>GET on intercompany rent, unplanned</h4>
+      <p class="stat bad">$9,720</p>
+      <p>Per year, on $216,000 of rent. Pure pyramiding.</p>
+    </div>
+    <div class="card">
+      <h4>With the §237-16.5 deduction</h4>
+      <p class="stat ok">$1,215</p>
+      <p>Same rent, 87.5% deducted. Saves $8,505 a year for a written sublease and a form.</p>
+    </div>
+  </div>
+  <p>
+    Conditions: the sublease must be of the same real property, in writing, and PropCo must
+    certify to OpCo that it is GET-licensed and taxable — without that certificate the
+    deduction is presumed unavailable. File Form G-72. Note it covers the room sublease line
+    only; activation and production service revenue pays full GET.
+  </p>
+
+  <h3>The rest of the stack</h3>
+  <ul>
+    <li><strong>Cost segregation, always.</strong> With 100% bonus depreciation permanent under
+      OBBBA, reclassifying ~25% of building basis plus 85% of the build-out gives $973,500 of
+      year-one deduction on the Kona purchase. It is the single largest tax lever in the model
+      — and it only pays if you have other income to shelter and you materially participate.</li>
+    <li><strong>QBI §199A</strong> takes 20% off the federal rate on the operating income. A
+      production-services and hospitality business is not a specified service trade, so it
+      qualifies.</li>
+    <li><strong>Property classification is a live risk.</strong> The model uses residential
+      classification. Honolulu's Hotel/Resort rate is $13.90 per $1,000 against Residential A's
+      $11.40, and Hawaiʻi County's is $11.55. Running a visibly commercial operation invites
+      reclassification; budget for it.</li>
+    <li><strong>HARPTA</strong> withholds 7.25% of gross sale price from non-resident sellers at
+      exit. A cash-flow problem, not a tax problem, but it is real money tied up.</li>
+    <li><strong>Watch the recapture.</strong> Cost segregation front-loads deductions into
+      §1245 property, which recaptures at ordinary rates on sale — $389,400 in the base
+      Kona exit. A 1031 exchange defers it; the OZ step-up eliminates it; doing nothing pays it.</li>
+  </ul>
+</section>
+
+<!-- ============================================ DECISION -->
+<section>
+  <p class="eyebrow">07 — The recommended configuration</p>
+  <h2 class="head">What the house has to be</h2>
+
+  <div class="scroll">
+    <table>
+      <caption>Hawaiʻi Island, purchased, 30-day service terms — steady-state year</caption>
+      <thead><tr><th>Engine</th><th>Revenue</th><th>Share</th><th>Bed-nights</th><th>Net per bed-night</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Brand activations (10 × $72,000)</td><td>$720,000</td><td>43.0%</td><td>500</td><td>$936</td></tr>
+        <tr><td class="lab">Creator residencies</td><td>$356,022</td><td>21.3%</td><td>1,666</td><td>$214</td></tr>
+        <tr><td class="lab">Cohort retreats (4 × 10 × $7,500)</td><td>$300,000</td><td>17.9%</td><td>320</td><td>$563</td></tr>
+        <tr><td class="lab">Production days (45 × $6,618)</td><td>$297,810</td><td>17.8%</td><td>450</td><td>$563</td></tr>
+        <tr class="total"><td class="lab">Gross revenue</td><td>$1,673,832</td><td></td><td>2,936</td><td>80.4% utilization</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="cards">
+    <div class="card"><h4>NOI</h4><p class="stat">$413,624</p><p>24.7% margin</p></div>
+    <div class="card"><h4>Debt coverage</h4><p class="stat ok">2.78×</p><p>on $148,987 of annual service</p></div>
+    <div class="card"><h4>Cash-on-cash</h4><p class="stat">19.03%</p><p>on $1,390,000 of equity</p></div>
+    <div class="card"><h4>Ten-year IRR</h4><p class="stat ok">12.93%</p><p>2.27× MoIC, NPV @ 12% of +$72,389</p></div>
+  </div>
+
+  <p class="pull">
+    Residency is 21% of revenue and 57% of the calendar. It is not the business — it is the
+    inventory that makes the business sellable.
+  </p>
+
+  <p>
+    That inversion is the whole design. Brands do not buy houses; they buy access to creators
+    and to a location. The resident roster is what makes a takeover worth $72,000, and the
+    takeovers are what pay the mortgage. Price residency to fill beds and build the roster,
+    not to cover costs — the model says it never will.
+  </p>
+
+  <h3>Why the collab-house era ended, and what this changes</h3>
+  <p>
+    Hype House peaked at 21 members with four actually living there, lost its top talent
+    within months and was sold in 2024. The recorded failure mode is structural: content
+    houses are built to incubate a collective, brands buy individuals, and the breakout stars
+    leave. Any plan that monetises the <em>talent</em> inherits that failure.
+  </p>
+  <p>
+    This model monetises the <em>place and the production capability</em> instead. Talent
+    churn becomes a scheduling problem rather than an existential one, because the asset —
+    a permitted, equipped, credit-eligible production facility in a location nobody else can
+    replicate — does not walk out.
+  </p>
+
+  <h3>What to test before committing capital</h3>
+  <ul>
+    <li><strong>Sell four takeovers before you buy anything.</strong> Letters of intent from
+      four brands at $72,000 is the whole thesis. Rent a house for one quarter and run them.
+      If four will not sign, no property decision matters.</li>
+    <li><strong>Confirm the production pipeline.</strong> Talk to Hawaii-registered production
+      companies about location days at $6,618. They know the credit better than you do and
+      will tell you fast whether the price is real.</li>
+    <li><strong>Get the property class ruling in writing</strong> from the county before close,
+      not after.</li>
+    <li><strong>Price insurance for the actual use.</strong> The model carries $30,000; a
+      commercial production and events rider on a coastal Hawaii property may not come in
+      there.</li>
+  </ul>
+
+  <p>
+    Do those four things first and the model becomes a decision instead of a hypothesis. Skip
+    them and the honest expected outcome is the base case on the previous page: a beautiful
+    house, a negative NPV, and a lesson already learned publicly by everyone who tried it in
+    Los Angeles.
+  </p>
+</section>
+
+<!-- ============================================ PRO -->
+<section>
+  <p class="eyebrow">08 — What a professional would change</p>
+  <h2 class="head">Four holes in the analysis above, and what fixing them does</h2>
+
+  <p>
+    Everything to this point is a competent plan-level model. It is not what an
+    institutional underwriter would accept, and the gaps all push the same way: they
+    flatter the deal. Here is each one, fixed.
+  </p>
+
+  <h3>1. Revenue started in month one. It doesn't.</h3>
+  <p>
+    There was no pre-opening period — no closing, permitting, renovation, hiring or
+    pre-selling. Nine months of that carries debt service, property tax, insurance,
+    a founder and a manager, at <span class="m num">$46,600</span> a month, before a
+    dollar arrives.
+  </p>
+
+  <h3>2. "Equity in" was the wrong number entirely.</h3>
+  <p>
+    The figure quoted was down payment plus build-out. What you actually have to fund
+    is the <strong>peak cumulative cash deficit</strong> — the trough of the monthly
+    cash curve, which is deeper because the operating loss keeps digging after the
+    pre-opening burn stops.
+  </p>
+
+  <div class="cards">
+    <div class="card">
+      <h4>What the model said you needed</h4>
+      <p class="stat">$1,390,000</p>
+      <p>Down payment plus $610,000 of build-out.</p>
+    </div>
+    <div class="card">
+      <h4>Peak cumulative cash deficit</h4>
+      <p class="stat bad">$2,017,029</p>
+      <p>Trough at month 21. Understated by <strong>$627,029</strong> — 45%. Raise
+      against this number, not the other one.</p>
+    </div>
+  </div>
+
+  <h3>3. The tornado moved one driver at a time. Reality doesn't.</h3>
+  <p>
+    A ±25% tornado is a diagnostic, not a downside case. If brands stop booking, creators
+    stop coming too, retreats thin out and production days go with them — one demand
+    factor moves all of them together. That is a different business:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <caption>Correlated demand — every revenue driver moves together</caption>
+      <thead><tr><th>Demand factor</th><th>Gross revenue</th><th>NOI</th><th>DSCR</th><th>10-yr IRR</th><th>NPV @ 12%</th><th>NPV @ 20%</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">0.50</td><td>$769,078</td><td class="bad">−$132,434</td><td class="bad">−0.89</td><td class="bad">−15.24%</td><td class="bad">−$1,807,342</td><td class="bad">−$1,747,001</td></tr>
+        <tr><td class="lab">0.70</td><td>$1,107,762</td><td>$72,466</td><td class="bad">0.49</td><td class="bad">−3.58%</td><td class="bad">−$1,102,002</td><td class="bad">−$1,244,479</td></tr>
+        <tr><td class="lab">0.85</td><td>$1,318,001</td><td>$205,596</td><td>1.38</td><td>3.24%</td><td class="bad">−$643,720</td><td class="bad">−$917,975</td></tr>
+        <tr><td class="lab">1.00 &nbsp;<span class="flag yes">the plan</span></td><td>$1,673,832</td><td>$413,624</td><td>2.78</td><td class="ok">12.93%</td><td class="ok">$72,389</td><td class="bad">−$408,157</td></tr>
+        <tr><td class="lab">1.15</td><td>$2,064,623</td><td>$640,429</td><td>4.30</td><td class="ok">22.45%</td><td class="ok">$853,133</td><td class="ok">$148,462</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>
+    The one-at-a-time analysis said a 25% cut to activations still returned +1.09%. Moved
+    together at 0.7 demand the business cannot service its debt at all. Note the last
+    column too: at a 20% discount rate — which is what an illiquid, single-asset,
+    owner-operated venture in a hurricane zone actually deserves — <strong>even the plan
+    is negative.</strong> The 12% hurdle used throughout this document is generous.
+  </p>
+
+  <h3>4. A point estimate where a distribution belongs</h3>
+  <p>
+    Running 600 correlated paths, with demand drawn from a triangular distribution whose
+    mode sits at 0.85 — because plans are optimistic and new ventures usually land under
+    them — puts the headline case in perspective:
+  </p>
+
+  <div class="scroll">
+    <table>
+      <caption>600 correlated paths · demand ~ Tri(0.45, 0.85, 1.25) · cost ~ Tri(0.95, 1.05, 1.30)</caption>
+      <thead><tr><th>Exit route</th><th>P10</th><th>P25</th><th>Median</th><th>P75</th><th>P90</th><th>P(NPV &gt; 0)</th></tr></thead>
+      <tbody>
+        <tr><td class="lab">Sell as a house (3%/yr)</td><td class="bad">−$1,456,875</td><td class="bad">−$1,135,285</td><td class="bad">−$687,797</td><td class="bad">−$119,511</td><td class="ok">$280,413</td><td>19.5%</td></tr>
+        <tr><td class="lab">Sell at max(house, 10% cap)</td><td class="bad">−$1,413,155</td><td class="bad">−$1,090,800</td><td class="bad">−$641,835</td><td class="ok">$267,681</td><td class="ok">$986,657</td><td>29.7%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>
+    <strong>The base case is roughly the 82nd percentile, not the expected outcome.</strong>
+    The median path loses money, and there is a <span class="m num">27%</span> chance of
+    failing to cover debt service in a stabilized year. That is not an argument against
+    doing it — plenty of good businesses look like this — but it is the honest shape, and
+    "12.93% IRR" is not.
+  </p>
+
+  <div class="statute">
+    <p class="cite">A note on method — why these are NPV probabilities, not IRR</p>
+    <blockquote>
+      IRR is undefined whenever cash flows never change sign, which happens on precisely
+      the worst paths. Ranking the simulation on IRR silently deleted <em>127 of 600</em>
+      paths — all of them bad ones — and reported a healthier business than exists. NPV
+      always exists. Every probability above is computed on NPV for that reason.
+    </blockquote>
+  </div>
+
+  <h3>A correction to what I wrote earlier</h3>
+  <p>
+    Section 03 exited the property at appreciated value only, and I speculated in the
+    working notes that a going-concern sale would be worth less. That was wrong. At a
+    stabilized NOI of $413,624 growing with inflation, the business sells for
+    <span class="m num">$5.6M</span> at a 10% cap against
+    <span class="m num">$3.5M</span> for the house — so the appreciation-only exit was
+    <strong>conservative by roughly 5 points of IRR.</strong>
+  </p>
+  <p>
+    That correction carries a second one worth more than the first. On weak paths the
+    cap-rate value falls below the house value — and no rational seller takes $1M for a
+    $3.5M house because the business underperformed. The residential value is a
+    <strong>floor</strong> under the operating business: effectively a free put option,
+    and in Hawaii, where residential prices are high relative to achievable NOI, an
+    unusually valuable one.
+  </p>
+
+  <p class="pull">
+    That floor is the strongest argument for buying rather than leasing — and it is the
+    one thing the lease case can never have.
+  </p>
+
+  <p>
+    It also converts the exit into a strategic instruction. The going-concern premium is
+    only available if a buyer will underwrite the NOI, and today 43% of revenue is
+    handshake brand deals that a buyer values at close to zero. <strong>Convert
+    activations into multi-year contracts, because the contract is worth more at exit
+    than the cash it produces while you hold it.</strong>
+  </p>
+
+  <h3>One sanity check that should have come first</h3>
+  <p>
+    $1,673,832 of revenue on ten beds is <span class="m num">$167,383</span> per bed per
+    year. A $600-a-night boutique hotel room at 70% occupancy grosses about
+    <span class="m num">$153,300</span> per key. So this plan asks a bed in a house to
+    outperform top-tier boutique hospitality — possible only because activations and
+    production days sell the same bed at four times the lodging rate. It is not absurd,
+    but it is the kind of number to check <em>before</em> building ten sections on top
+    of it, not after.
+  </p>
+
+  <h3>What an entrepreneur would do instead of any of this</h3>
+  <p>
+    A professional modeler answers "what is this worth?" An operator answers "what is the
+    cheapest thing that could prove me wrong?" — and those produce different first moves.
+    Everything above is downstream of one unknown: whether eight to ten brands a year will
+    book Hawaii. No amount of modelling resolves it.
+  </p>
+  <ul>
+    <li><strong>Rent a house for one quarter</strong> and run two activations. Roughly
+      $60,000 to test the assumption that $2M of capital rests on.</li>
+    <li><strong>Take a lease with a purchase option</strong> rather than choosing between
+      buying and leasing. It buys the residential floor described above without committing
+      the capital, and the option itself has value the model above never priced.</li>
+    <li><strong>Sell the calendar before buying the building.</strong> Four signed LOIs
+      change the financing conversation completely, and they are also exactly what makes
+      the going-concern exit real.</li>
+    <li><strong>Write the kill criteria down first.</strong> "Fewer than four signed
+      activations by month nine" is a decision. "It's still early" is not.</li>
+  </ul>
+
+  <p>
+    The model's real output is not 12.93%. It is a list of the four numbers worth spending
+    money to learn, ranked — and the observation that three of them can be tested for less
+    than 3% of the capital at risk.
+  </p>
+</section>
+
+<footer>
+  <p>
+    <strong>Assumptions.</strong> Ten beds. Oʻahu $4.0M / Hawaiʻi Island $2.6M, 70% LTV at
+    7.25% over 30 years, $610,000 build-out. Ten-year hold, 3% appreciation and cost inflation,
+    6% selling cost, 40% blended ordinary rate, 12% discount rate. Year-one revenue at 55% of
+    plan, year two at 80%. GET 4.5%; TAT 14% where applicable; property tax at FY2026–27
+    county rates.
+  </p>
+  <p>
+    <strong>Method.</strong> Every figure is exact rational arithmetic computed by
+    <code>agent-calc</code> — amortization schedules, NPV, IRR and all breakeven solves — with
+    no floating-point rounding anywhere in the chain. A browser port of the same model is published as a live sandbox and agrees with the exact model to 1.9e-8 relative. Legal figures are read from the current
+    text of HRS §235-17, §237-16.5 and the 2026 Hawaiʻi Film Office guidance under Act 185.
+  </p>
+  <p>
+    <strong>Limits.</strong> Revenue assumptions are judgement, not data: there is no public
+    comparable for a Hawaii creator-production house, so the brand-activation pipeline is the
+    load-bearing guess and is treated as such throughout. Tax treatment is directional and
+    depends on facts a Hawaii CPA must confirm — particularly material participation, the
+    §1.469-1T(e)(3)(ii)(B) services exception, and county property classification. This is a
+    model, not advice.
+  </p>
+  <p class="bento">
+    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
+      <rect x="1.5" y="4.5" width="21" height="15" rx="2.5" fill="none"
+            stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="4.5" x2="10" y2="19.5" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    Powered by <b>Bento</b> — every figure carries its own arithmetic
+  </p>
+</footer>
+
+</div>

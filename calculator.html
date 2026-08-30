@@ -1,0 +1,614 @@
+<title>Creator House Sandbox</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,400&display=swap">
+
+<style>
+  :root {
+    --ground:#ECEEE9; --surface:#F9FAF7; --sunk:#E2E5DE; --raised:#FFFFFF;
+    --ink:#14201D; --ink-2:#3D4A45; --muted:#6B766F;
+    --rule:#D2D8CF; --rule-2:#BFC7BC;
+    --accent:#14615A; --accent-w:#DCEBE7;
+    --warn:#94441F; --warn-w:#F2E2D7;
+    --good:#3F6B28; --good-w:#E2ECD8;
+    --crit:#8C2F22; --crit-w:#F5DEDA;
+    --r1:#A9D5CF; --r2:#6DB4AB; --r3:#358C83; --r4:#14615A;
+    --f-d:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+    --f-m:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+    --f-b:"Source Serif 4",Georgia,serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0E1513; --surface:#161F1D; --sunk:#101817; --raised:#1C2724;
+      --ink:#E3E8E1; --ink-2:#B3BDB6; --muted:#8A968E;
+      --rule:#283532; --rule-2:#3A4844;
+      --accent:#58B8AB; --accent-w:#12312E;
+      --warn:#DE9264; --warn-w:#37231A;
+      --good:#97C46F; --good-w:#1F2E19;
+      --crit:#E8836F; --crit-w:#3A1F1A;
+      --r1:#1D4F4A; --r2:#2C7A71; --r3:#43A398; --r4:#79CCC2;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0E1513; --surface:#161F1D; --sunk:#101817; --raised:#1C2724;
+    --ink:#E3E8E1; --ink-2:#B3BDB6; --muted:#8A968E;
+    --rule:#283532; --rule-2:#3A4844;
+    --accent:#58B8AB; --accent-w:#12312E;
+    --warn:#DE9264; --warn-w:#37231A;
+    --good:#97C46F; --good-w:#1F2E19;
+    --crit:#E8836F; --crit-w:#3A1F1A;
+    --r1:#1D4F4A; --r2:#2C7A71; --r3:#43A398; --r4:#79CCC2;
+  }
+
+  * { box-sizing:border-box; }
+  body { background:var(--ground); color:var(--ink); font-family:var(--f-b);
+         font-size:15px; line-height:1.55; -webkit-font-smoothing:antialiased; }
+  .wrap { max-width:74rem; margin:0 auto; padding:0 1.25rem 5rem; }
+
+  header { padding:2.5rem 0 1.25rem; border-bottom:2px solid var(--ink); margin-bottom:1.5rem; }
+  h1 { font-family:var(--f-d); font-weight:800; font-size:clamp(1.9rem,4.5vw,2.9rem);
+       line-height:1; letter-spacing:-.03em; margin:0 0 .625rem; }
+  .sub { color:var(--ink-2); max-width:44rem; margin:0 0 1rem; font-size:1rem; }
+  .badge { display:inline-flex; align-items:center; gap:.5rem; font-family:var(--f-m);
+           font-size:.688rem; letter-spacing:.06em; text-transform:uppercase;
+           background:var(--good-w); color:var(--good); padding:.3rem .6rem; border-radius:2px; }
+  .badge b { font-weight:600; }
+
+  .presets { display:flex; flex-wrap:wrap; gap:.5rem; margin-bottom:1.5rem; }
+  .presets button {
+    font-family:var(--f-m); font-size:.75rem; letter-spacing:.03em;
+    padding:.45rem .8rem; background:var(--surface); color:var(--ink);
+    border:1px solid var(--rule-2); border-radius:2px; cursor:pointer; }
+  .presets button:hover { border-color:var(--accent); color:var(--accent); }
+  .presets button.on { background:var(--accent); border-color:var(--accent); color:var(--ground); }
+  .presets button:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .cols { display:grid; grid-template-columns:20rem 1fr; gap:1.75rem; align-items:start; }
+  @media (max-width:60rem) { .cols { grid-template-columns:1fr; } }
+
+  /* ---- controls ---- */
+  .panel { background:var(--surface); border:1px solid var(--rule); }
+  @media (min-width:60rem) { .panel { position:sticky; top:1rem; max-height:calc(100vh - 2rem); overflow-y:auto; } }
+  .grp { border-bottom:1px solid var(--rule); }
+  .grp:last-child { border-bottom:none; }
+  .grp > summary {
+    font-family:var(--f-m); font-size:.688rem; font-weight:600; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--muted); padding:.7rem .9rem; cursor:pointer;
+    list-style:none; display:flex; justify-content:space-between; align-items:center; }
+  .grp > summary::-webkit-details-marker { display:none; }
+  .grp > summary::after { content:"+"; font-size:.9rem; color:var(--rule-2); }
+  .grp[open] > summary::after { content:"–"; }
+  .grp > summary:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+  .fields { padding:0 .9rem .9rem; display:grid; gap:.7rem; }
+
+  .fld label { display:flex; justify-content:space-between; align-items:baseline;
+               font-size:.8125rem; color:var(--ink-2); margin-bottom:.2rem; gap:.5rem; }
+  .fld label b { font-family:var(--f-m); font-size:.8125rem; font-weight:500;
+                 color:var(--ink); font-variant-numeric:tabular-nums; }
+  input[type=range] { width:100%; accent-color:var(--accent); height:1.1rem; margin:0; }
+  input[type=range]:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+  .seg { display:grid; grid-auto-flow:column; gap:2px; background:var(--rule);
+         border:1px solid var(--rule); }
+  .seg button { font-family:var(--f-m); font-size:.7rem; padding:.35rem .2rem;
+                background:var(--surface); color:var(--ink-2); border:none; cursor:pointer; }
+  .seg button.on { background:var(--accent); color:var(--ground); font-weight:600; }
+  .seg button:focus-visible { outline:2px solid var(--accent); outline-offset:-2px; }
+
+  /* ---- results ---- */
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(9.5rem,1fr));
+           gap:1px; background:var(--rule); border:1px solid var(--rule); margin-bottom:1.25rem; }
+  .stat { background:var(--raised); padding:.9rem 1rem; }
+  .stat .k { font-family:var(--f-m); font-size:.625rem; letter-spacing:.1em;
+             text-transform:uppercase; color:var(--muted); margin-bottom:.3rem; }
+  .stat .v { font-family:var(--f-d); font-weight:800; font-size:1.55rem; line-height:1;
+             letter-spacing:-.02em; font-variant-numeric:tabular-nums; }
+  .stat .d { font-family:var(--f-m); font-size:.688rem; color:var(--muted); margin-top:.25rem;
+             font-variant-numeric:tabular-nums; }
+  .v.good { color:var(--good); } .v.warn { color:var(--warn); } .v.crit { color:var(--crit); }
+  .pill { display:inline-block; font-family:var(--f-m); font-size:.6rem; font-weight:600;
+          letter-spacing:.06em; text-transform:uppercase; padding:.08rem .35rem;
+          border-radius:2px; vertical-align:middle; margin-left:.35rem; }
+  .pill.good { background:var(--good-w); color:var(--good); }
+  .pill.warn { background:var(--warn-w); color:var(--warn); }
+  .pill.crit { background:var(--crit-w); color:var(--crit); }
+
+  .alert { border:1px solid var(--crit); border-left-width:4px; background:var(--crit-w);
+           color:var(--crit); padding:.7rem .9rem; margin-bottom:1.25rem;
+           font-size:.875rem; display:none; }
+  .alert.show { display:block; }
+
+  .card { background:var(--surface); border:1px solid var(--rule); padding:1.1rem 1.2rem;
+          margin-bottom:1.25rem; }
+  .card h2 { font-family:var(--f-m); font-size:.688rem; font-weight:600; letter-spacing:.12em;
+             text-transform:uppercase; color:var(--muted); margin:0 0 .9rem; }
+  .card .note { font-size:.8125rem; color:var(--muted); margin:.75rem 0 0; }
+
+  .cap { display:flex; height:34px; border:1px solid var(--rule-2); overflow:hidden; }
+  .cap > div { position:relative; transition:width .18s ease; }
+  .cap .lbl { position:absolute; inset:0; display:grid; place-items:center;
+              font-family:var(--f-m); font-size:.625rem; font-weight:600;
+              color:var(--ground); white-space:nowrap; overflow:hidden; }
+  .cap .free { background:var(--sunk); }
+  .cap .free .lbl { color:var(--muted); }
+  .caplegend { display:flex; flex-wrap:wrap; gap:.35rem 1rem; margin-top:.6rem;
+               font-family:var(--f-m); font-size:.688rem; color:var(--ink-2); }
+  .caplegend span { display:flex; align-items:center; gap:.4rem; }
+  .caplegend i { width:11px; height:11px; display:inline-block; }
+
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:.8125rem; min-width:26rem; }
+  th,td { padding:.32rem .55rem; text-align:right; border-bottom:1px solid var(--rule);
+          font-variant-numeric:tabular-nums; }
+  th:first-child,td:first-child { text-align:left; padding-left:0; }
+  th { font-family:var(--f-m); font-size:.625rem; font-weight:600; letter-spacing:.07em;
+       text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--rule-2); }
+  td.lab { font-family:var(--f-b); }
+  tr.sum td { font-weight:600; border-top:1px solid var(--rule-2); }
+  .neg { color:var(--warn); }
+
+  .spark { display:grid; grid-auto-flow:column; gap:2px; align-items:end; height:70px; }
+  .spark div { background:var(--accent); min-height:2px; border-radius:2px 2px 0 0; position:relative; }
+  .spark div.dn { background:var(--warn); border-radius:0 0 2px 2px; align-self:start; }
+  .sparkax { display:grid; grid-auto-flow:column; gap:2px; margin-top:.3rem;
+             font-family:var(--f-m); font-size:.6rem; color:var(--muted); text-align:center; }
+
+  footer { margin-top:2.5rem; padding-top:1.25rem; border-top:1px solid var(--rule-2);
+           font-size:.8125rem; color:var(--muted); }
+  footer p { max-width:48rem; }
+  code { font-family:var(--f-m); font-size:.9em; }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+
+  .bento {
+    display: flex; align-items: center; gap: .55rem;
+    margin: 1.5rem 0 0; padding-top: 1.1rem; border-top: 1px solid var(--rule);
+    font-family: var(--f-m); font-size: .75rem; letter-spacing: .07em;
+    text-transform: uppercase; color: var(--muted); max-width: none;
+  }
+  .bento svg { color: var(--accent); flex: none; }
+  .bento b { color: var(--ink); font-weight: 600; letter-spacing: .1em; }
+</style>
+
+<div class="wrap">
+<header>
+  <h1>Creator House Sandbox</h1>
+  <p class="sub">
+    Turn the knobs yourself. Every number recomputes live — capacity ledger, P&amp;L, debt
+    coverage, ten-year return, and the peak cash you actually have to fund.
+  </p>
+  <span class="badge"><b>Verified</b> agrees with the exact agent-calc model to 1.9 × 10⁻⁸</span>
+</header>
+
+<div class="presets" id="presets"></div>
+
+<div class="cols">
+  <!-- ============ CONTROLS ============ -->
+  <form class="panel" id="ctl" onsubmit="return false">
+    <details class="grp" open>
+      <summary>Asset &amp; tenure</summary>
+      <div class="fields">
+        <div class="fld"><label>Island</label>
+          <div class="seg" id="seg-site">
+            <button type="button" data-v="kona">Hawaiʻi Island</button>
+            <button type="button" data-v="oahu">Oʻahu</button>
+          </div></div>
+        <div class="fld"><label>Tenure</label>
+          <div class="seg" id="seg-mode">
+            <button type="button" data-v="buy">Buy</button>
+            <button type="button" data-v="lease">Lease</button>
+          </div></div>
+        <div class="fld"><label>Lease terms</label>
+          <div class="seg" id="seg-term">
+            <button type="button" data-v="1">180+ days</button>
+            <button type="button" data-v="0">30 days</button>
+          </div></div>
+        <div class="fld"><label>Other income to absorb year-1 losses</label>
+          <div class="seg" id="seg-shield">
+            <button type="button" data-v="1">Yes — shield usable</button>
+            <button type="button" data-v="0">No — suspended</button>
+          </div></div>
+      </div>
+    </details>
+
+    <details class="grp" open>
+      <summary>Revenue engines</summary>
+      <div class="fields" id="f-rev"></div>
+    </details>
+
+    <details class="grp">
+      <summary>Operating costs</summary>
+      <div class="fields" id="f-cost"></div>
+    </details>
+
+    <details class="grp">
+      <summary>Capital &amp; exit</summary>
+      <div class="fields" id="f-cap"></div>
+    </details>
+  </form>
+
+  <!-- ============ RESULTS ============ -->
+  <div>
+    <div class="alert" id="alert"></div>
+    <div class="stats" id="stats"></div>
+
+    <div class="card">
+      <h2>Bed-night capacity — nothing can be sold twice</h2>
+      <div class="cap" id="cap"></div>
+      <div class="caplegend" id="caplegend"></div>
+      <p class="note" id="capnote"></p>
+    </div>
+
+    <div class="card">
+      <h2>Revenue by engine, and what each bed-night earns</h2>
+      <div class="scroll"><table id="t-eng"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Operating costs</h2>
+      <div class="scroll"><table id="t-cost"></table></div>
+    </div>
+
+    <div class="card">
+      <h2>Ten-year net cash flow after tax and debt</h2>
+      <div class="spark" id="spark"></div>
+      <div class="sparkax" id="sparkax"></div>
+      <p class="note" id="dcfnote"></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>
+    <b>What this is.</b> The same model published in the written analysis, ported to the browser
+    so the assumptions can be argued with. Structural figures (revenue, NOI, DSCR, equity) match
+    the exact rational model computed by <code>agent-calc</code> bit for bit; IRR and NPV differ
+    by at most 1.9 × 10⁻⁸ relative — float64 rounding in the discounting chain, fractions of a
+    cent on a million-dollar NPV.
+  </p>
+  <p>
+    <b>What it still assumes.</b> Ramp of 55% then 80% of plan in years one and two, 3% growth
+    and cost inflation, 40% blended ordinary tax with the depreciation shield usable, exit at
+    appreciated value with full recapture. Peak funding need adds nine months of pre-opening
+    burn and the operating trough — it is not the same as the down payment. Revenue assumptions
+    are judgement, not data.
+  </p>
+  <p class="bento">
+    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
+      <rect x="1.5" y="4.5" width="21" height="15" rx="2.5" fill="none"
+            stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="4.5" x2="10" y2="19.5" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    Powered by <b>Bento</b> — every figure carries its own arithmetic
+  </p>
+</footer>
+</div>
+
+<script>
+// ---------------------------------------------------------------- model
+const GET=0.045, TAT=0.14, DAYS=365;
+const LAND={Honolulu:0.40,Hawaii:0.30}, COSTSEG=0.25;
+const RAMP=[0.55,0.80,1,1,1,1,1,1,1,1];
+const GROWTH=0.03, INFLATE=0.03, TAX_ORD=0.40;
+const TAX_1250=0.3225, TAX_LTCG=0.3105;
+const SEASON=[1.18,1.12,1.08,0.92,0.85,1.05,1.12,1.08,0.84,0.82,0.94,1.00];
+
+const SITES={
+  oahu:{name:"Oʻahu — North Shore",county:"Honolulu",price:4000000,leaseMonthly:18000,
+    credit:0.22,creditUplift:0.27,insurance:38000,utilities:42000,maintPct:0.015,
+    proptaxResid:1000000*4.50/1000+3000000*11.40/1000,proptaxHotel:4000000*13.90/1000},
+  kona:{name:"Hawaiʻi Island — Kona",county:"Hawaii",price:2600000,leaseMonthly:12000,
+    credit:0.27,creditUplift:0.32,insurance:30000,utilities:34000,maintPct:0.015,
+    proptaxResid:2600000*11.10/1000,proptaxHotel:2600000*11.55/1000},
+};
+const pmt=(P,r,n)=>{const i=r/12;return i===0?P/n:P*i/(1-Math.pow(1+i,-n));};
+const bal=(P,r,n,m)=>{const i=r/12,p=pmt(P,r,n),g=Math.pow(1+i,m);return P*g-p*(g-1)/i;};
+const yInt=(P,r,n,y)=>pmt(P,r,n)*12-(bal(P,r,n,12*(y-1))-bal(P,r,n,12*y));
+
+function engines(o){
+  const cap=o.beds*DAYS,e={};
+  e["Brand activations"]={g:o.activations*o.activationFee,
+    d:o.activations*o.activationFee*o.activationDirect,bn:o.activations*o.activationDays*o.beds};
+  e["Cohort retreats"]={g:o.retreats*o.retreatSeats*o.retreatPrice,
+    d:o.retreats*o.retreatSeats*o.retreatPrice*o.retreatDirect,bn:o.retreats*o.retreatDays*o.retreatSeats};
+  e["Production days"]={g:o.prodDays*o.prodDayRate,d:o.prodDays*o.prodDayRate*o.prodDirect,bn:o.prodDays*o.beds};
+  let used=0; for(const k in e) used+=e[k].bn;
+  const rem=cap-used;
+  if(rem<0) return {oversold:-rem,cap};
+  const rbn=rem*o.residOcc;
+  e["Creator residencies"]={g:rbn/(365/12)*o.residRate,d:0,bn:rbn};
+  return {e,cap,used:used+rbn,free:cap-used-rbn,oversold:0};
+}
+function fixedCosts(s,o,mode){
+  const c={};
+  if(mode==="buy"){c.debt=pmt(s.price*o.ltv,o.rate,o.termMonths)*12;
+    c.proptax=o.proptaxHotel?s.proptaxHotel:s.proptaxResid;c.insurance=s.insurance;c.maint=s.price*s.maintPct;}
+  else{c.lease=s.leaseMonthly*12;c.insurance=s.insurance/2;c.maint=s.price*s.maintPct/3;}
+  c.utilities=s.utilities;c.staff=o.staff;c.founder=o.founderComp;
+  c.marketing=o.marketing;c.legal=o.legal;c.software=o.software;
+  let t=0; for(const k in c) t+=c[k];
+  return {total:t,parts:c};
+}
+function run(s,o,mode){
+  const E=engines(o); if(E.oversold) return {oversold:E.oversold,cap:E.cap};
+  const rev={}; let gross=0;
+  for(const k in E.e){rev[k]=E.e[k].g;gross+=E.e[k].g;}
+  const fx=fixedCosts(s,o,mode),c={};
+  if(mode==="buy"){c["Property tax"]=fx.parts.proptax;c["Insurance"]=fx.parts.insurance;
+    c["Maintenance & reserves"]=fx.parts.maint;}
+  else{c["Master lease"]=fx.parts.lease;c["Insurance (contents/GL)"]=fx.parts.insurance;
+    c["Maintenance & reserves"]=fx.parts.maint;}
+  c["Utilities & connectivity"]=s.utilities;c["Staff (loaded)"]=o.staff;
+  c["Founder compensation"]=o.founderComp;c["Marketing & booking"]=o.marketing;
+  c["Legal, GET/TAT, CPA"]=o.legal;c["Software & gear service"]=o.software;
+  c["Consumables & housekeeping"]=E.used*o.consumables;
+  let dir=0; for(const k in E.e) dir+=E.e[k].d;
+  c["Engine direct costs"]=dir;
+  c["GET @ 4.5% of gross"]=gross*GET;
+  c["TAT @ 14% of lodging"]=o.term180?0:rev["Creator residencies"]*TAT;
+  c["Payment/platform fees"]=gross*o.paymentFees;
+  let total=0; for(const k in c) total+=c[k];
+  const debt=mode==="buy"?fx.parts.debt:0;
+  const equity=mode==="buy"?s.price*(1-o.ltv)+o.capex:o.capex;
+  const noi=gross-total;
+  return {eng:E.e,rev,cost:c,gross,total,noi,debt,net:noi-debt,
+          dscr:debt?noi/debt:null,equity,cap:E.cap,used:E.used,free:E.free,oversold:0};
+}
+function dcf(s,o,mode,shield){
+  const b=run(s,o,mode); if(b.oversold) return {oversold:b.oversold};
+  const fx=fixedCosts(s,o,mode),debt=mode==="buy"?fx.parts.debt:0;
+  const fixedExDebt=fx.total-debt;
+  const tat=o.term180?0:b.rev["Creator residencies"]*TAT;
+  let dir=0; for(const k in b.eng) dir+=b.eng[k].d;
+  const varRate=(b.gross*(GET+o.paymentFees)+dir+b.used*o.consumables+tat)/b.gross;
+  let bonus,straight;
+  if(mode==="buy"){const bldg=s.price*(1-LAND[s.county]);
+    bonus=bldg*COSTSEG+o.capex*o.capexShortLife;
+    straight=(bldg*(1-COSTSEG)+o.capex*(1-o.capexShortLife))/39;}
+  else{bonus=o.capex*o.capexShortLife;straight=o.capex*(1-o.capexShortLife)/10;}
+  const P=s.price*o.ltv,rows=[],flows=[-b.equity];
+  let carry=0,a1250=0,a1245=mode==="buy"?bonus:0;
+  for(let y=1;y<=o.holdYears;y++){
+    const g=Math.pow(1+GROWTH,y-1);
+    const rev=b.gross*(RAMP[y-1]??1)*g;
+    const eb=rev-rev*varRate-fixedExDebt*Math.pow(1+INFLATE,y-1);
+    const interest=mode==="buy"?yInt(P,o.rate,o.termMonths,y):0;
+    const dep=(y===1?bonus:0)+straight; a1250+=straight;
+    const taxable=eb-interest-dep+carry;
+    let tax;
+    if(taxable<0){carry=shield?0:taxable;tax=shield?taxable*TAX_ORD:0;}
+    else{carry=0;tax=taxable*TAX_ORD;}
+    const cf=eb-debt-tax; flows.push(cf); rows.push({y,rev,eb,dep,taxable,tax,cf});
+  }
+  let ex=null;
+  if(mode==="buy"){
+    const val=s.price*Math.pow(1+o.appreciation,o.holdYears);
+    const ns=val*(1-o.saleCosts),bl=bal(P,o.rate,o.termMonths,12*o.holdYears);
+    const basis=s.price+o.capex-a1250-a1245,gain=ns-basis;
+    const t45=Math.min(a1245,Math.max(0,gain))*TAX_ORD;
+    const rem=Math.max(0,gain-a1245);
+    const t50=Math.min(a1250,rem)*TAX_1250;
+    const tcg=Math.max(0,rem-a1250)*TAX_LTCG;
+    const proceeds=ns-bl-t45-t50-tcg;
+    flows[flows.length-1]+=proceeds; ex={val,ns,bl,basis,gain,proceeds};
+  }
+  return {base:b,rows,flows,ex};
+}
+const npv=(r,f)=>f.reduce((a,v,t)=>a+v/Math.pow(1+r,t),0);
+function irr(f){let lo=-0.95,hi=10;const g=r=>npv(r,f);
+  if(g(lo)*g(hi)>0) return null;
+  for(let i=0;i<200;i++){const m=(lo+hi)/2; if(g(lo)*g(m)<=0) hi=m; else lo=m;}
+  return (lo+hi)/2;}
+
+// peak cumulative cash deficit: pre-opening burn + operating trough
+function fundingNeed(s,o,mode,preMonths){
+  const b=run(s,o,mode); if(b.oversold) return null;
+  const fx=fixedCosts(s,o,mode),debt=mode==="buy"?fx.parts.debt:0;
+  const fixedExDebt=fx.total-debt;
+  const tat=o.term180?0:b.rev["Creator residencies"]*TAT;
+  let dir=0; for(const k in b.eng) dir+=b.eng[k].d;
+  const varRate=(b.gross*(GET+o.paymentFees)+dir+b.used*o.consumables+tat)/b.gross;
+  const carry=(debt+(fx.parts.lease||0)+(fx.parts.proptax||0)+fx.parts.insurance+s.utilities*0.40)/12;
+  const burn=carry+(o.founderComp+o.staff*0.35)/12+o.marketing/12*1.5+o.legal/12;
+  const HORIZON=8;   // years of operating cash modelled
+  let cum=-(mode==="buy"?s.price*(1-o.ltv):0)-o.capex, trough=cum, tm=0, m=0;
+  for(let i=0;i<preMonths;i++){cum-=burn;m++;if(cum<trough){trough=cum;tm=m;}}
+  for(let y=1;y<=HORIZON;y++){
+    const g=Math.pow(1+GROWTH,y-1);
+    const revY=b.gross*(RAMP[y-1]??1)*g, fixY=fixedExDebt*Math.pow(1+INFLATE,y-1);
+    for(let k=0;k<12;k++){
+      const rev=revY*SEASON[k]/12;
+      cum+=rev-rev*varRate-fixY/12-debt/12; m++;
+      if(cum<trough){trough=cum;tm=m;}
+    }
+  }
+  // If the trough is the last month modelled, cash is still falling: the number
+  // below is a floor on the requirement, not the requirement.
+  return {need:-trough,month:tm,preBurn:burn*preMonths,burn,neverRecovers:tm===m,horizon:m};
+}
+
+// ---------------------------------------------------------------- state
+const D={beds:10,residOcc:0.70,residRate:6500,term180:1,
+  activations:8,activationDays:5,activationFee:55000,activationDirect:0.35,
+  prodDays:30,prodDayRate:4500,prodDirect:0.15,
+  retreats:4,retreatDays:8,retreatSeats:10,retreatPrice:7500,retreatDirect:0.40,
+  staff:265000,founderComp:120000,marketing:60000,legal:35000,software:24000,
+  consumables:11,paymentFees:0.03,
+  ltv:0.70,rate:0.0725,termMonths:360,capex:610000,capexShortLife:0.85,
+  appreciation:0.03,saleCosts:0.06,holdYears:10,proptaxHotel:false,
+  site:"kona",mode:"buy",preMonths:9,shield:1};
+let S={...D};
+
+const PRESETS={
+  "Oʻahu base plan":{...D,site:"oahu"},
+  "Kona base plan":{...D,site:"kona"},
+  "The one that works":{...D,site:"kona",mode:"buy",term180:0,prodDayRate:6618,prodDays:45,
+                        activationFee:72000,activations:10},
+  "Lease instead":{...D,site:"kona",mode:"lease",term180:1,prodDayRate:6618,prodDays:45,
+                   activationFee:72000,activations:10},
+  "Downside (0.7 demand)":{...D,site:"kona",term180:0,prodDayRate:6618,prodDays:32,
+                           activationFee:50400,activations:7,retreats:3,residOcc:0.49},
+};
+
+const SLIDERS={
+ "f-rev":[
+  ["beds","Beds",4,20,1,v=>v],
+  ["residOcc","Residency occupancy",0,1,0.01,v=>pct(v)],
+  ["residRate","Residency $/seat-month",2000,15000,100,v=>usd(v)],
+  ["activations","Brand activations / yr",0,26,1,v=>v],
+  ["activationFee","Activation fee",10000,200000,1000,v=>usd(v)],
+  ["activationDays","Activation length (days)",2,10,1,v=>v+"d"],
+  ["prodDays","Production days / yr",0,150,1,v=>v],
+  ["prodDayRate","Production day rate",1000,15000,100,v=>usd(v)],
+  ["retreats","Retreats / yr",0,12,1,v=>v],
+  ["retreatPrice","Retreat price / seat",1000,25000,250,v=>usd(v)],
+ ],
+ "f-cost":[
+  ["staff","Staff, loaded",0,600000,5000,v=>usd(v)],
+  ["founderComp","Founder compensation",0,300000,5000,v=>usd(v)],
+  ["marketing","Marketing & booking",0,250000,5000,v=>usd(v)],
+  ["legal","Legal, GET/TAT, CPA",0,150000,2500,v=>usd(v)],
+  ["consumables","Consumables $/bed-night",0,60,1,v=>usd(v)],
+  ["activationDirect","Activation direct cost",0,0.8,0.01,v=>pct(v)],
+ ],
+ "f-cap":[
+  ["ltv","Loan to value",0,0.9,0.01,v=>pct(v)],
+  ["rate","Mortgage rate",0.03,0.14,0.00125,v=>pct(v,2)],
+  ["capex","Build-out capex",0,3000000,10000,v=>usd(v)],
+  ["appreciation","Appreciation / yr",-0.02,0.08,0.0025,v=>pct(v,2)],
+  ["holdYears","Hold (years)",3,10,1,v=>v+"y"],
+  ["preMonths","Pre-opening (months)",0,24,1,v=>v+"mo"],
+ ]};
+
+// ---------------------------------------------------------------- format
+const usd=(v,dp=0)=>(v<0?"-$":"$")+Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:dp,minimumFractionDigits:dp});
+const usdk=v=>Math.abs(v)>=1e6?(v<0?"-$":"$")+(Math.abs(v)/1e6).toFixed(2)+"M"
+              :Math.abs(v)>=1000?(v<0?"-$":"$")+Math.round(Math.abs(v)/1000)+"k":usd(v);
+const pct=(v,dp=0)=>(v*100).toFixed(dp)+"%";
+
+// ---------------------------------------------------------------- build UI
+const ctl=document.getElementById("ctl");
+for(const [box,list] of Object.entries(SLIDERS)){
+  const host=document.getElementById(box);
+  for(const [key,label,min,max,step,fmt] of list){
+    const d=document.createElement("div"); d.className="fld";
+    d.innerHTML=`<label for="s-${key}">${label} <b id="v-${key}"></b></label>
+      <input type="range" id="s-${key}" min="${min}" max="${max}" step="${step}">`;
+    host.appendChild(d);
+    d.querySelector("input").addEventListener("input",e=>{
+      S[key]=parseFloat(e.target.value); render();
+    });
+  }
+}
+function segs(id,key,cast){
+  document.getElementById(id).querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click",()=>{S[key]=cast(b.dataset.v); render();});
+  });
+}
+segs("seg-site","site",v=>v); segs("seg-mode","mode",v=>v); segs("seg-term","term180",v=>+v);
+segs("seg-shield","shield",v=>+v);
+
+const pbox=document.getElementById("presets");
+for(const name of Object.keys(PRESETS)){
+  const b=document.createElement("button"); b.type="button"; b.textContent=name;
+  b.addEventListener("click",()=>{S={...PRESETS[name]}; render(name);});
+  pbox.appendChild(b);
+}
+
+// ---------------------------------------------------------------- render
+function render(activePreset){
+  for(const list of Object.values(SLIDERS))
+    for(const [key,,,,,fmt] of list){
+      const el=document.getElementById("s-"+key);
+      if(el) el.value=S[key];
+      const v=document.getElementById("v-"+key);
+      if(v) v.textContent=fmt(S[key]);
+    }
+  document.querySelectorAll("#seg-site button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.site));
+  document.querySelectorAll("#seg-mode button").forEach(b=>b.classList.toggle("on",b.dataset.v===S.mode));
+  document.querySelectorAll("#seg-term button").forEach(b=>b.classList.toggle("on",+b.dataset.v===S.term180));
+  document.querySelectorAll("#seg-shield button").forEach(b=>b.classList.toggle("on",+b.dataset.v===S.shield));
+  document.querySelectorAll("#presets button").forEach(b=>b.classList.toggle("on",b.textContent===activePreset));
+
+  const s=SITES[S.site], o={...S, term180:!!S.term180};
+  const alert=document.getElementById("alert");
+  const b=run(s,o,S.mode);
+  if(b.oversold){
+    alert.className="alert show";
+    alert.innerHTML=`<b>Capacity oversold by ${Math.round(b.oversold).toLocaleString()} bed-nights.</b>
+      Activations, retreats and production days together need more of the house than it has.
+      Reduce one, or add beds.`;
+    document.getElementById("stats").innerHTML=""; return;
+  }
+  const d=dcf(s,o,S.mode,!!S.shield);
+  const r=irr(d.flows), n12=npv(0.12,d.flows), n20=npv(0.20,d.flows);
+  const fn=fundingNeed(s,o,S.mode,S.preMonths);
+
+  const dscrState=b.dscr===null?"":b.dscr<1?"crit":b.dscr<1.25?"warn":"good";
+  const dscrPill=b.dscr===null?"":b.dscr<1?"cannot service":b.dscr<1.25?"thin":"covered";
+  alert.className=b.dscr!==null&&b.dscr<1?"alert show":"alert";
+  if(b.dscr!==null&&b.dscr<1)
+    alert.innerHTML=`<b>Debt coverage below 1.0.</b> Operating income of ${usd(b.noi)} does not
+      cover ${usd(b.debt)} of annual debt service. No lender writes this, and it does not survive a slow year.`;
+
+  document.getElementById("stats").innerHTML=[
+    ["Gross revenue",usdk(b.gross),"",`${Math.round(b.used).toLocaleString()} bed-nights, ${pct(b.used/b.cap)} utilization`],
+    ["NOI",usdk(b.noi),b.noi<0?"crit":"",`${pct(b.noi/b.gross)} margin`],
+    ["Debt coverage",b.dscr===null?"n/a":b.dscr.toFixed(2)+"×",dscrState,
+      b.dscr===null?"leased — no debt":`on ${usdk(b.debt)}/yr`+(dscrPill?` <span class="pill ${dscrState}">${dscrPill}</span>`:"")],
+    ["10-year IRR",r===null?"n/a":pct(r,2),r===null?"":r>=0.12?"good":r>=0?"warn":"crit",
+      r===null?"no sign change":"after tax, levered"],
+    ["NPV @ 12%",usdk(n12),n12>=0?"good":"crit",`@20%: ${usdk(n20)}`],
+    ["Peak cash needed",fn?(fn.neverRecovers?"> "+usdk(fn.need):usdk(fn.need)):"—",
+      fn&&fn.neverRecovers?"crit":"warn",
+      fn?(fn.neverRecovers
+          ? `still falling at month ${fn.horizon} — never recovers <span class="pill crit">unbounded</span>`
+          : `trough at month ${fn.month} · vs ${usdk(b.equity)} equity`):""],
+  ].map(([k,v,cls,sub])=>
+    `<div class="stat"><div class="k">${k}</div><div class="v ${cls}">${v}</div><div class="d">${sub}</div></div>`
+  ).join("");
+
+  // capacity bar — sequential ramp ordered by yield per bed-night
+  const order=Object.entries(b.eng).map(([k,v])=>({k,...v,y:v.bn?(v.g-v.d)/v.bn:0}))
+                    .sort((a,z)=>z.y-a.y);
+  const ramp=["--r4","--r3","--r2","--r1"];
+  const capEl=document.getElementById("cap");
+  capEl.innerHTML=order.map((e,i)=>{
+    const w=e.bn/b.cap*100;
+    return `<div style="width:${w}%;background:var(${ramp[i]})">${w>11?`<span class="lbl">${Math.round(e.bn).toLocaleString()}</span>`:""}</div>`;
+  }).join("")+`<div class="free" style="width:${Math.max(0,b.free)/b.cap*100}%">${b.free/b.cap>0.09?`<span class="lbl">${Math.round(b.free).toLocaleString()} idle</span>`:""}</div>`;
+  document.getElementById("caplegend").innerHTML=order.map((e,i)=>
+    `<span><i style="background:var(${ramp[i]})"></i>${e.k} — ${usd(e.y)}/bed-night</span>`).join("")
+    +`<span><i style="background:var(--sunk);border:1px solid var(--rule-2)"></i>idle</span>`;
+  document.getElementById("capnote").textContent=
+    `Darkest is the highest-yielding use of a bed. ${order[0].k} earns ${(order[0].y/order[order.length-1].y).toFixed(1)}× what ${order[order.length-1].k.toLowerCase()} earns on the same bed-night.`;
+
+  document.getElementById("t-eng").innerHTML=
+    `<thead><tr><th>Engine</th><th>Revenue</th><th>Share</th><th>Bed-nights</th><th>Net $/bed-night</th></tr></thead><tbody>`+
+    order.map(e=>`<tr><td class="lab">${e.k}</td><td>${usd(e.g)}</td><td>${pct(e.g/b.gross)}</td>
+      <td>${Math.round(e.bn).toLocaleString()}</td><td>${usd(e.y)}</td></tr>`).join("")+
+    `<tr class="sum"><td class="lab">Gross</td><td>${usd(b.gross)}</td><td>100%</td>
+      <td>${Math.round(b.used).toLocaleString()}</td><td>${usd(b.gross/b.used)}</td></tr></tbody>`;
+
+  document.getElementById("t-cost").innerHTML=
+    `<thead><tr><th>Line</th><th>Annual</th><th>% of gross</th></tr></thead><tbody>`+
+    Object.entries(b.cost).filter(([,v])=>v).map(([k,v])=>
+      `<tr><td class="lab">${k}</td><td>${usd(v)}</td><td>${pct(v/b.gross)}</td></tr>`).join("")+
+    `<tr class="sum"><td class="lab">Total operating cost</td><td>${usd(b.total)}</td><td>${pct(b.total/b.gross)}</td></tr>
+     <tr class="sum"><td class="lab">NOI</td><td class="${b.noi<0?'neg':''}">${usd(b.noi)}</td><td>${pct(b.noi/b.gross)}</td></tr>`+
+    (b.debt?`<tr class="sum"><td class="lab">Debt service</td><td>${usd(b.debt)}</td><td>${pct(b.debt/b.gross)}</td></tr>
+     <tr class="sum"><td class="lab">Net cash flow</td><td class="${b.net<0?'neg':''}">${usd(b.net)}</td><td>${pct(b.net/b.gross)}</td></tr>`:"")+
+    `</tbody>`;
+
+  const cfs=d.rows.map(x=>x.cf), mx=Math.max(...cfs.map(Math.abs),1);
+  document.getElementById("spark").innerHTML=cfs.map(v=>
+    `<div class="${v<0?'dn':''}" style="height:${Math.abs(v)/mx*100}%" title="${usd(v)}"></div>`).join("");
+  document.getElementById("sparkax").innerHTML=cfs.map((v,i)=>`<div>${i+1}</div>`).join("");
+  const tot=cfs.reduce((a,v)=>a+v,0);
+  document.getElementById("dcfnote").innerHTML=
+    `Year 1 is ${usd(cfs[0])}${S.shield&&cfs[0]>0?` — and that is a tax refund, not trading. It requires
+     other income to shelter and material participation; switch the toggle off to see the year without it`
+     :""}. Ten-year operating total ${usd(tot)}${d.ex?`, plus ${usd(d.ex.proceeds)} of net sale proceeds after recapture`:", with no asset to sell at the end"}.`;
+}
+render("Kona base plan");
+</script>
