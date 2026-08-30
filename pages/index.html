@@ -1,0 +1,267 @@
+<title>The Hawaii House Question</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --ground:#ECEEE9; --surface:#F9FAF7; --sunk:#E2E5DE;
+    --ink:#14201D; --ink-2:#3D4A45; --muted:#6B766F;
+    --rule:#D2D8CF; --rule-2:#BFC7BC;
+    --accent:#14615A; --accent-w:#DCEBE7;
+    --warn:#94441F; --warn-w:#F2E2D7;
+    --good:#3F6B28; --good-w:#E2ECD8;
+    --f-d:"Bricolage Grotesque","Helvetica Neue",Arial,sans-serif;
+    --f-b:"Source Serif 4",Georgia,"Times New Roman",serif;
+    --f-m:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground:#0E1513; --surface:#161F1D; --sunk:#101817;
+      --ink:#E3E8E1; --ink-2:#B3BDB6; --muted:#8A968E;
+      --rule:#283532; --rule-2:#3A4844;
+      --accent:#58B8AB; --accent-w:#12312E;
+      --warn:#DE9264; --warn-w:#37231A;
+      --good:#97C46F; --good-w:#1F2E19;
+    }
+  }
+  :root[data-theme="dark"] {
+    --ground:#0E1513; --surface:#161F1D; --sunk:#101817;
+    --ink:#E3E8E1; --ink-2:#B3BDB6; --muted:#8A968E;
+    --rule:#283532; --rule-2:#3A4844;
+    --accent:#58B8AB; --accent-w:#12312E;
+    --warn:#DE9264; --warn-w:#37231A;
+    --good:#97C46F; --good-w:#1F2E19;
+  }
+
+  * { box-sizing:border-box; }
+  body { background:var(--ground); color:var(--ink); font-family:var(--f-b);
+         font-size:17px; line-height:1.6; -webkit-font-smoothing:antialiased; }
+  .page { max-width:56rem; margin:0 auto; padding:0 1.5rem 5rem; }
+  .skip { position:absolute; left:-9999px; }
+  .skip:focus { left:1rem; top:1rem; background:var(--accent); color:var(--ground);
+                padding:.5rem .9rem; z-index:9; border-radius:2px; }
+  a { color:var(--accent); text-underline-offset:2px; }
+
+  header { padding:4.5rem 0 2rem; border-bottom:2px solid var(--ink); }
+  .kicker { font-family:var(--f-m); font-size:.688rem; letter-spacing:.16em;
+            text-transform:uppercase; color:var(--accent); margin:0 0 1.4rem;
+            display:flex; flex-wrap:wrap; gap:.5rem 1.1rem; }
+  .kicker span { color:var(--muted); }
+  h1 { font-family:var(--f-d); font-weight:800; font-size:clamp(2.4rem,7.5vw,4.6rem);
+       line-height:.95; letter-spacing:-.032em; margin:0 0 1.1rem; text-wrap:balance; }
+  .lede { font-size:1.25rem; line-height:1.5; color:var(--ink-2); max-width:40rem; margin:0; }
+  .lede b { color:var(--ink); font-weight:600; }
+
+  .answer { background:var(--surface); border:1px solid var(--rule);
+            border-left:4px solid var(--warn); padding:1.6rem 1.7rem; margin:2rem 0 0; }
+  .answer h2 { font-family:var(--f-m); font-size:.688rem; font-weight:600; letter-spacing:.16em;
+               text-transform:uppercase; color:var(--warn); margin:0 0 .8rem; }
+  .answer p { margin:0 0 .8rem; font-size:1.0625rem; max-width:none; }
+  .answer p:last-child { margin-bottom:0; }
+  .answer strong { font-weight:600; }
+  .m { font-family:var(--f-m); font-size:.9em; font-variant-numeric:tabular-nums; }
+
+  h2.head { font-family:var(--f-d); font-weight:700; font-size:1.75rem; line-height:1.1;
+            letter-spacing:-.02em; margin:3.5rem 0 1.1rem; text-wrap:balance; }
+  p { max-width:38rem; margin:0 0 1.1rem; }
+
+  .doors { display:grid; gap:1rem; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));
+           margin:1.5rem 0 0; }
+  .door { display:block; background:var(--surface); border:1px solid var(--rule);
+          padding:1.4rem 1.5rem; text-decoration:none; color:inherit;
+          transition:border-color .15s ease, transform .15s ease; }
+  .door:hover, .door:focus-visible { border-color:var(--accent); transform:translateY(-2px); }
+  .door:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  .door .n { font-family:var(--f-m); font-size:.625rem; letter-spacing:.14em;
+             text-transform:uppercase; color:var(--accent); margin-bottom:.5rem; }
+  .door h3 { font-family:var(--f-d); font-weight:700; font-size:1.3rem; letter-spacing:-.015em;
+             margin:0 0 .45rem; }
+  .door p { font-size:.9375rem; color:var(--ink-2); margin:0; max-width:none; }
+
+  table { border-collapse:collapse; width:100%; font-size:.9375rem; margin:1.25rem 0; }
+  caption { text-align:left; font-family:var(--f-m); font-size:.688rem; letter-spacing:.12em;
+            text-transform:uppercase; color:var(--muted); padding-bottom:.6rem; }
+  th,td { padding:.45rem .7rem; text-align:right; border-bottom:1px solid var(--rule);
+          font-variant-numeric:tabular-nums; }
+  th:first-child, td:first-child { text-align:left; padding-left:0; font-family:var(--f-b); }
+  th { font-family:var(--f-m); font-size:.625rem; font-weight:600; letter-spacing:.08em;
+       text-transform:uppercase; color:var(--muted); border-bottom:1px solid var(--rule-2); }
+  .bad { color:var(--warn); font-weight:600; }
+  .scroll { overflow-x:auto; }
+
+  blockquote.statute { background:var(--sunk); border:1px solid var(--rule); margin:1.25rem 0;
+                       padding:1.25rem 1.4rem; max-width:42rem; font-size:1.0625rem; line-height:1.5; }
+  blockquote.statute em { color:var(--warn); font-style:normal; font-weight:600; }
+  blockquote.statute cite { display:block; margin-top:.7rem; font-family:var(--f-m);
+                            font-size:.688rem; letter-spacing:.1em; text-transform:uppercase;
+                            color:var(--muted); font-style:normal; }
+
+  details.faq { border-bottom:1px solid var(--rule); max-width:42rem; }
+  details.faq summary { font-family:var(--f-d); font-weight:700; font-size:1.0625rem;
+                        padding:.9rem 0; cursor:pointer; list-style:none;
+                        display:flex; justify-content:space-between; gap:1rem; }
+  details.faq summary::-webkit-details-marker { display:none; }
+  details.faq summary::after { content:"+"; color:var(--muted); font-family:var(--f-m); }
+  details.faq[open] summary::after { content:"–"; }
+  details.faq summary:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+  details.faq p { padding-bottom:.9rem; margin:0; font-size:.9375rem; }
+
+  footer { margin-top:4rem; padding-top:1.4rem; border-top:2px solid var(--ink);
+           font-size:.875rem; color:var(--muted); }
+  footer p { max-width:42rem; }
+  .bento { display:flex; align-items:center; gap:.55rem; flex-wrap:wrap;
+           margin:1.4rem 0 0; padding-top:1.1rem; border-top:1px solid var(--rule);
+           font-family:var(--f-m); font-size:.75rem; letter-spacing:.07em;
+           text-transform:uppercase; color:var(--muted); max-width:none; }
+  .bento svg { color:var(--accent); flex:none; }
+  .bento b { color:var(--ink); font-weight:600; letter-spacing:.1em; }
+  @media (prefers-reduced-motion:reduce) { * { transition:none !important; } }
+</style>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="page">
+<header>
+  <p class="kicker">Feasibility model <span>·</span> <span>August 2026</span> <span>·</span>
+    <span>exact arithmetic, no figure from a language model</span></p>
+  <h1>The Hawaii House Question</h1>
+  <p class="lede">
+    Can a ten-bedroom creator house in Hawaii pay for itself? Modelled across two islands,
+    buy against lease, four revenue engines, and every tax line the State actually charges.
+    <b>It can — but not as a house, and not on Oʻahu.</b>
+  </p>
+</header>
+
+<main id="main">
+
+<div class="answer">
+  <h2>The answer</h2>
+  <p><strong>Rent from influencers cannot carry the building.</strong> Every configuration
+    needs between <span class="m">104%</span> and <span class="m">134%</span> occupancy.
+    Covering costs on rent alone takes <span class="m">$107,000–$136,000</span> per creator
+    per year — and creators who can pay that do not need a shared house.</p>
+  <p><strong>One configuration clears a 12% hurdle.</strong> Hawaiʻi Island, purchased, with
+    30-day service terms, location days priced against the film credit and ten brand takeovers
+    a year: <span class="m">12.93%</span> ten-year IRR at <span class="m">2.78×</span> debt
+    coverage. That is the <strong>82nd percentile</strong> of 600 correlated paths, not the
+    expected case — the median path loses money.</p>
+  <p><strong>It is not an influencer house.</strong> It is a branded-content production venue
+    that keeps a resident roster as inventory.</p>
+</div>
+
+<h2 class="head">Read it two ways</h2>
+<div class="doors">
+  <a class="door" href="verdict.html">
+    <div class="n">The analysis</div>
+    <h3>Full report</h3>
+    <p>Eight sections: what the law permits, the capacity ledger, four configurations, the
+      scenario ladder, where it breaks, entity structure, and the underwriter's pass that
+      finds four holes in the first seven.</p>
+  </a>
+  <a class="door" href="calculator.html">
+    <div class="n">The model, live</div>
+    <h3>Interactive sandbox</h3>
+    <p>Turn the knobs yourself. Capacity, P&amp;L, debt coverage, ten-year return and peak
+      funding need recompute as you move the sliders. Verified against the exact model.</p>
+  </a>
+</div>
+
+<h2 class="head">Why rent alone can never work</h2>
+<div class="scroll">
+<table>
+  <caption>Residency as the only engine — seat-months needed against the 120 the house has</caption>
+  <thead><tr><th>Configuration</th><th>Fixed cost</th><th>Seat-months</th><th>Occupancy</th></tr></thead>
+  <tbody>
+    <tr><td>Oʻahu — buy</td><td>$911,911</td><td>160.6</td><td class="bad">133.8%</td></tr>
+    <tr><td>Oʻahu — lease</td><td>$801,000</td><td>141.1</td><td class="bad">117.6%</td></tr>
+    <tr><td>Hawaiʻi Island — buy</td><td>$784,847</td><td>138.2</td><td class="bad">115.2%</td></tr>
+    <tr><td>Hawaiʻi Island — lease</td><td>$710,000</td><td>125.0</td><td class="bad">104.2%</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 class="head">The sentence that kills the obvious plan</h2>
+<p>
+  Hawaii pays a refundable film production credit of 22% on Oʻahu and 27% on the neighbor
+  islands, plus five points for hiring locally. Lodging for cast and crew, location fees and
+  airfare to Hawaii are all qualified costs. Then the definitions section arrives:
+</p>
+<blockquote class="statute">
+  "Commercial" … <em>does not include an advertising message with Internet-only
+  distribution.</em><br><br>
+  "Qualified production" … does not include … <em>productions produced primarily for
+  industrial, corporate, institutional, or other private purposes.</em>
+  <cite>Hawaiʻi Revised Statutes §235-17(o)</cite>
+</blockquote>
+<p>
+  A social brand campaign is statutorily excluded. So the play inverts: <strong>don't be the
+  taxpayer, be the qualified expense.</strong> When a music video or streaming series rents
+  the house, they claim the credit on your invoice — which lets a neighbor island charge
+  <span class="m">14.71%</span> more than Oʻahu for an identical cost to the customer.
+</p>
+
+<h2 class="head">Questions this answers</h2>
+
+<details class="faq">
+  <summary>Can you run a short-term rental influencer house on Oʻahu?</summary>
+  <p>No. Ordinance 22-7 set a 90-day minimum; a federal court permanently enjoined it in
+    December 2023, so enforcement runs on the older 30-day standard. Nothing shorter is
+    available outside resort zoning. Maui's Ordinance 5909 goes further, phasing out roughly
+    6,200 apartment-district vacation rentals between 2029 and 2031.</p>
+</details>
+<details class="faq">
+  <summary>Does the Hawaii film tax credit cover social media content?</summary>
+  <p>No. HRS §235-17(o) excludes advertising with Internet-only distribution, and excludes
+    productions made primarily for private or corporate purposes. Music videos, short films,
+    streaming series and TV-distributed commercials do qualify — so the house earns from the
+    credit as a vendor to those productions, never as the claimant.</p>
+</details>
+<details class="faq">
+  <summary>What is the most profitable use of a bed in a creator house?</summary>
+  <p>Brand activations, at $936 net per bed-night. Cohort retreats and production location
+    days both return $563. Creator residencies return $214 — the least productive use of the
+    asset, and the one that occupies most of the calendar.</p>
+</details>
+<details class="faq">
+  <summary>How much capital does it actually take?</summary>
+  <p>$2,017,029 — the peak cumulative cash deficit, reached in month 21. That is 45% more
+    than the $1,390,000 down payment plus build-out, because nine months of pre-opening burn
+    and the operating trough both come before any recovery.</p>
+</details>
+
+<h2 class="head">How the numbers are computed</h2>
+<p>
+  Every load-bearing figure is exact rational arithmetic produced by <code>agent-calc</code> —
+  amortization schedules, NPV, IRR and all breakeven solves — composed in Python
+  <code>Fraction</code>, so no floating point enters the chain. No number was produced by a
+  language model. The browser sandbox is a port validated against the exact model to
+  <span class="m">1.9 × 10⁻⁸</span> relative, which is float64 rounding in the discounting
+  chain and amounts to fractions of a cent on a million-dollar NPV.
+</p>
+<p>
+  All of it — model, report and sandbox — is open source at
+  <a href="https://github.com/copyleftdev/hawaii-influencer-house">github.com/copyleftdev/hawaii-influencer-house</a>.
+</p>
+
+</main>
+
+<footer>
+  <p>
+    Revenue assumptions are judgement, not data: there is no public comparable for a Hawaii
+    creator-production house, so the brand-activation pipeline is the load-bearing guess and is
+    treated as such throughout. Tax treatment is directional and depends on facts a Hawaii CPA
+    must confirm. <strong>This is a model, not advice</strong> — financial, legal or tax.
+  </p>
+  <p class="bento">
+    <svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true" focusable="false">
+      <rect x="1.5" y="4.5" width="21" height="15" rx="2.5" fill="none"
+            stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="4.5" x2="10" y2="19.5" stroke="currentColor" stroke-width="1.6"/>
+      <line x1="10" y1="12" x2="22.5" y2="12" stroke="currentColor" stroke-width="1.6"/>
+    </svg>
+    Powered by <b>Bento</b> — every figure carries its own arithmetic
+    <a href="https://github.com/copyleftdev/hawaii-influencer-house" style="margin-left:auto">source on github</a>
+  </p>
+</footer>
+</div>

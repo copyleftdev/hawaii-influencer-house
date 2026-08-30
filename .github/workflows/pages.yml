@@ -1,0 +1,49 @@
+name: Deploy Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-deploy
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install --quiet pillow
+      - run: python3 build.py
+      - name: Guard the build output
+        run: |
+          set -euo pipefail
+          for f in index.html verdict.html calculator.html robots.txt sitemap.xml llms.txt \
+                   og-index.png og-verdict.png og-calculator.png; do
+            test -s "site/$f" || { echo "missing or empty: site/$f"; exit 1; }
+          done
+          test -f site/.nojekyll || { echo "missing site/.nojekyll"; exit 1; }
+          grep -q '<!doctype html>' site/index.html
+          echo "build output OK"
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
