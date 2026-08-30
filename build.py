@@ -171,6 +171,31 @@ def build_page(page):
     return title, url
 
 
+FONT_CANDIDATES = {
+    "serif": ["NotoSerif-Bold.ttf", "DejaVuSerif-Bold.ttf", "LiberationSerif-Bold.ttf"],
+    "sans": ["NotoSans-Regular.ttf", "DejaVuSans.ttf", "LiberationSans-Regular.ttf"],
+    "mono": ["DejaVuSansMono.ttf", "NotoSansMono-Regular.ttf", "LiberationMono-Regular.ttf"],
+}
+
+
+def find_font(role):
+    """Resolve a font by filename anywhere under the system font roots.
+
+    CI runners do not carry the same fonts at the same paths as a developer box,
+    so never hardcode one: search candidates in preference order and fail loudly.
+    """
+    roots = [Path("/usr/share/fonts"), Path("/usr/local/share/fonts"), Path.home() / ".fonts"]
+    for name in FONT_CANDIDATES[role]:
+        for root in roots:
+            if not root.exists():
+                continue
+            hit = next(root.rglob(name), None)
+            if hit:
+                return str(hit)
+    raise SystemExit(
+        f"no {role} font found; tried {FONT_CANDIDATES[role]} under {[str(r) for r in roots]}")
+
+
 def og_image(stem, title, subtitle):
     from PIL import Image, ImageDraw, ImageFont
     W, H = 1200, 630
@@ -184,9 +209,9 @@ def og_image(stem, title, subtitle):
             d.rounded_rectangle([x, y, x + 100, y + 165], radius=10, outline="#1D3330", width=3)
     d.rectangle([760, 0, 900, H], fill=ground)  # fade the grid out toward the text
     d.rectangle([0, 0, 14, H], fill=accent)
-    serif = ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoSerif-Bold.ttf", 68)
-    sans = ImageFont.truetype("/usr/share/fonts/truetype/noto/NotoSans-Regular.ttf", 27)
-    mono = ImageFont.truetype("/usr/share/fonts/truetype/dejavu/DejaVuSansMono.ttf", 20)
+    serif = ImageFont.truetype(find_font("serif"), 68)
+    sans = ImageFont.truetype(find_font("sans"), 27)
+    mono = ImageFont.truetype(find_font("mono"), 20)
     d.text((70, 78), "FEASIBILITY MODEL", font=mono, fill=accent)
     y = 140
     for line in wrap(title, serif, 700, d):
