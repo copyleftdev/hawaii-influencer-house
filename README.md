@@ -2,6 +2,8 @@
 
 **Can a ten-bedroom creator house in Hawaii pay for itself?**
 
+### → [Read it](https://copyleftdev.github.io/hawaii-influencer-house/) · [Full report](https://copyleftdev.github.io/hawaii-influencer-house/verdict.html) · [Interactive sandbox](https://copyleftdev.github.io/hawaii-influencer-house/calculator.html)
+
 [![Tip my tokens](https://tokentip.to/badge/copyleftdev.svg?logo=1)](https://tokentip.to/@copyleftdev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-14615A.svg)](LICENSE)
 
@@ -122,6 +124,14 @@ node verify.js            # browser port vs the exact model
 | `calculator.html` | live sandbox — turn the knobs yourself |
 
 Open `verdict.html` or `calculator.html` directly in a browser; both are self-contained.
+
+They are authored as *fragments* (no `<html>`/`<head>`) so the same files can be published
+as Claude Artifacts, where the host supplies the document shell. `build.py` supplies an
+equivalent shell plus canonical/Open Graph/JSON-LD and emits `site/` for GitHub Pages:
+
+```sh
+python3 build.py      # -> site/
+```
 
 ---
 
